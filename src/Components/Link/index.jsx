@@ -1,9 +1,10 @@
 import React from 'react';
+import "./styles.css"
 
 const Link = (props) => {
   return (
-    <div>
-      <a href={props.href}>{props.name}</a>
+    <div >
+      <a className='link' href={props.href}>{props.name}</a>
     </div>
   );
 };

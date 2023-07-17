@@ -3,22 +3,34 @@
   text-decoration: none;
   padding: 0;
 }
+.box{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: fit-content;
+  margin-top: 50px;
+}
 .Login {
   display: flex;
   flex-direction: row;
   justify-content: center;
-  height: 100%;
+  gap: 20px;
+  height: 500px;
   margin-top: 20px;
 }
 .login-box {
-  max-width: 350px;
-  border: 1px solid grey;
+  max-width: 400px;
+  border: 1px solid rgb(198, 196, 196);
   padding: 20px;
   display: flex;
   justify-content: center;
   flex-direction: column;
   align-items: center;
   flex-grow: 1;
+
+}
+.login-img{
+  height: fit-content;
 }
 .login-btn {
   width: 100%;
@@ -27,14 +39,17 @@
   color: white;
   font-size: 15px;
   font-weight: 700;
+  border: none;
   outline: none;
   border-radius: 8px;
   margin: 20px 0;
+  cursor: pointer;
 }
 .get-app {
   height: fit-content;
-  max-width: 350px;
+  max-width: 400px;
   display: flex;
+  margin: 15px 0;
   flex-direction: column;
   justify-content: center;
   align-items: center;
@@ -43,11 +58,11 @@
   font-size: 14px;
   margin: 10px 0;
   height: 50px;
-  max-width: 350px;
+  max-width: 400px;
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 1px solid grey;
+  border: 1px solid rgb(198, 196, 196);
 }
 .download-app {
   display: flex;
@@ -57,8 +72,9 @@
   gap: 10px;
 }
 .download-img {
-  height: 50px;
+  height: 40px;
   max-width: 150px;
+  margin-top: 15px;
 }
 .other-method {
   font-size: 15px;
@@ -72,4 +88,21 @@
   text-decoration: none;
   margin: 10px 0;
   font-weight: 400;
+}
+.login-links{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  padding: 50px 50px 0 50px;
+  margin: 30px;
+  margin-top: 150px;
+  color: darkgray;
+}
+.copyright{
+  text-align: center;
+  font-size: 14px;
+  color: #737377;
+  margin-bottom: 20px;
 }

@@ -47,7 +47,7 @@ const LoginPage = () => {
           </div>
         </div>
       </div>
-    </div><div>
+    </div><div className='login-links'>
         <Link href="https://about.meta.com/" name="Meta" />
         <Link href="https://about.instagram.com/" name="About" />
         <Link href="https://about.instagram.com/en_US/blog" name="Blog" />
@@ -62,7 +62,8 @@ const LoginPage = () => {
         <Link href="https://www.threads.net/" name="Threads" />
         <Link href="https://www.facebook.com/help/instagram/261704639352628" name="Contact uploading and non-users" />
         <Link href="https://about.meta.com/technologies/meta-verified/" name="Meta verified" />
-      </div><p>&copy; 2023 Instagram from Meta </p></>
+      </div>
+      <p className='copyright'>&copy; 2023 Instagram from Meta </p></>
   );
 };
 
