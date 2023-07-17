@@ -1,6 +1,6 @@
 * {
   margin: 0;
-text-decoration: none;
+  text-decoration: none;
   padding: 0;
 }
 .Login {
@@ -49,25 +49,25 @@ text-decoration: none;
   align-items: center;
   border: 1px solid grey;
 }
-.download-app{
+.download-app {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
   gap: 10px;
 }
-.download-img{
- height: 50px;
+.download-img {
+  height: 50px;
   max-width: 150px;
 }
-.other-method{
+.other-method {
   font-size: 15px;
   color: #385197;
   margin-top: 10px;
   font-weight: 800;
 }
-.to-signup{
-  color: #00376B;
+.to-signup {
+  color: #00376b;
   font-size: 12px;
   text-decoration: none;
   margin: 10px 0;
