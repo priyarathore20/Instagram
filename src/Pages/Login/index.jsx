@@ -13,7 +13,7 @@ const LoginPage = () => {
           src="https://media.gcflearnfree.org/content/633d944b3823fb02e84dce55_10_05_2022/Screen%20Shot%202022-10-10%20at%202.28.19%20PM.png"
           alt="#"
         />
-        <div className="box">
+        <div className="box-1">
           <div className="login-box">
             <Logo />
             <form className="form">
