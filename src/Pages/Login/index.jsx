@@ -13,7 +13,7 @@ const LoginPage = () => {
       <div className='box'>
         <div className="login-box">
          <Logo />
-          <form className="input">
+          <form className='form'>
             <Input
               type="text"
               placeholder="Phone number, username or email address" />
