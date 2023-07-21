@@ -3,6 +3,7 @@ import './styles.css';
 import Logo from '../../Components/Logo';
 import Input from '../../Components/Input';
 import Link from '../../Components/Link';
+import { ImFacebook2 } from 'react-icons/im';
 
 const LoginPage = () => {
   return (
@@ -26,6 +27,7 @@ const LoginPage = () => {
             </form>
             <p>OR</p>
             <div className="other-method">
+              <ImFacebook2 />
               <p>Log in with Facebook</p>
             </div>
             <a href="#" className="to-signup">

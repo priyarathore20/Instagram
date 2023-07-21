@@ -81,6 +81,10 @@
 .other-method {
   font-size: 15px;
   color: #385197;
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  align-items: center;
   margin-top: 10px;
   font-weight: 800;
 }
