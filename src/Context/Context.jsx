@@ -1,5 +1,6 @@
 import React, { createContext, useContext } from 'react'
 import { initializeApp } from "firebase/app";
+import {FacebookAuthProvider, getAuth} from "firebase/auth"
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -13,12 +14,16 @@ const firebaseConfig = {
 
 const Context = createContext(null)
 const app = initializeApp(firebaseConfig);
+const facebook = new FacebookAuthProvider()
+const auth = getAuth()
 
-const FirebaseContext = () => {
+const FirebaseContext = (props) => {
  const useFirebaseContext = useContext(Context)
 
   return (
-    <div>FirebaseContext</div>
+    <Context.Provider value={}>
+      {props.children}
+    </Context.Provider>
   )
 }
 
