@@ -1,6 +1,7 @@
 import React, { createContext, useContext } from 'react'
 import { initializeApp } from "firebase/app";
-import {FacebookAuthProvider, getAuth} from "firebase/auth"
+import {FacebookAuthProvider, createUserWithEmailAndPassword, getAuth} from "firebase/auth"
+import Signup from '../Pages/Signup';
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -12,19 +13,29 @@ const firebaseConfig = {
   appId: "1:52985859212:web:4077beb40ccefd9a9fffa9"
 };
 
-const Context = createContext(null)
+export const InstagramContext = createContext(null)
 const app = initializeApp(firebaseConfig);
 const facebook = new FacebookAuthProvider()
-const auth = getAuth()
 
 const FirebaseContext = (props) => {
- const useFirebaseContext = useContext(Context)
+  const auth = getAuth();
+
+  const signupWithEmailandPassword = (email, password) => {
+    createUserWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        // Handle successful signup here
+        console.log('User signed up successfully:', userCredential.user);
+      })
+      .catch((error) => {
+        // Handle signup error here
+        console.error('Error during signup:', error.code, error.message);
+      });
+  };
 
   return (
-    <Context.Provider value={}>
+    <InstagramContext.Provider value={signupWithEmailandPassword}>
       {props.children}
-    </Context.Provider>
-  )
-}
-
+    </InstagramContext.Provider>
+  );
+};
 export default FirebaseContext
