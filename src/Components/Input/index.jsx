@@ -3,9 +3,9 @@ import "./styles.css"
 
 const Input = ({type, placeholder, ...rest}) => {
   return (
-    <form>
-      <input className='input' type={type} placeholder={placeholder}  />
-    </form>
+    <div>
+      <input className='input' {...rest} type={type} placeholder={placeholder}  />
+    </div>
   )
 }
 
