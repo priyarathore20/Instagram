@@ -2,6 +2,7 @@ import React from 'react'
 import "./Styles.css"
 import Sidebar from '../../Components/Sidebar'
 import Posts from '../../Components/Post'
+import Suggestions from '../../Components/Suggestions'
 
 const Homepage = () => {
   return (
@@ -9,7 +10,7 @@ const Homepage = () => {
     <div className='home'>
       <div><Sidebar /></div>
       <div><Posts /></div>
-      <div>suggestions</div>
+      <div><Suggestions /></div>
     </div>
     </>
   )

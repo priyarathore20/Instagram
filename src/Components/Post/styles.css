@@ -1,0 +1,59 @@
+.posts{
+  display: flex;
+  justify-content: flex-start;
+  margin: 30px ;
+  align-items: flex-start;
+  height: 100%;
+  width: 800px;
+  padding: 0 50px 0 20px;
+}
+.post-card {
+  max-width: 900px;
+  /* margin: 0 auto; */
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 16px;
+  background-color: #fff;
+}
+
+.post-header {
+  display: flex;
+  align-items: center;
+}
+
+.profile-pic {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 12px;
+  background-color: #ccc; /* Replace with an actual image using 'background-image' property */
+}
+
+.username {
+  font-weight: bold;
+}
+
+.post-image {
+  width: 100%;
+  margin-top: 12px;
+  /* Replace 'post-image.jpg' with the path to your post image */
+  /* For example: background-image: url('path/to/your/post-image.jpg'); */
+  background-color: #f1f1f1;
+  background-size: cover;
+  background-position: center;
+  height: 200px;
+}
+
+.post-caption {
+  margin-top: 12px;
+}
+
+.likes {
+  margin-top: 8px;
+  color: #8e8e8e;
+}
+
+.timestamp {
+  margin-top: 8px;
+  color: #8e8e8e;
+}
