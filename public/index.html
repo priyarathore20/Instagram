@@ -10,6 +10,7 @@
       content="Web site created using create-react-app"
     />
     <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
+
     <!--
       manifest.json provides metadata used when your web app is installed on a
       user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
@@ -25,6 +26,32 @@
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
     <title>React App</title>
+    <script
+      async
+      defer
+      crossorigin="anonymous"
+      src="https://connect.facebook.net/en_US/sdk.js"
+    ></script>
+    <script>
+      window.fbAsyncInit = function () {
+        FB.init({
+          appId: '1614592339028589',
+          cookie: true,
+          xfbml: true,
+          version: 'v12.0',
+        });
+      };
+
+      (function (d, s, id) {
+        var js,
+          fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s);
+        js.id = id;
+        js.src = 'https://connect.facebook.net/en_US/sdk.js';
+        fjs.parentNode.insertBefore(js, fjs);
+      })(document, 'script', 'facebook-jssdk');
+    </script>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>

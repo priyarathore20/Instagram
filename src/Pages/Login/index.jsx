@@ -36,7 +36,7 @@ const LoginPage = () => {
           </div>
           <div className="new-account">
             <p>
-              Don't have an account? <a href="#">Sign up</a>
+              Don't have an account? <a href="/signup">Sign up</a>
             </p>
           </div>
           <div className="get-app">
