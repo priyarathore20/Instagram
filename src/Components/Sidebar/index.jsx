@@ -13,17 +13,17 @@ const Sidebar = () => {
     <div className='sidebar'>
       <div><Logo/></div>
       <div className='sidebar-options'>
-        <a href="#"><AiFillHome /> Home</a>
-        <a href="#"><AiOutlineSearch /> Search</a>
-        <a href="#"><MdOutlineExplore /> Explore</a>
-        <a href="#"><TfiVideoClapper /> Reels</a>
-        <a href="#"><RiMessengerLine /> Messages</a>
-        <a href="#"><AiOutlineHeart /> Notifications</a>
-        <a href="#"><FiPlusSquare /> Create</a>
-        <a href="#"><RxAvatar /> Create</a>
+        <a className='sidebar-option' href="#"><AiFillHome /> Home</a>
+        <a className='sidebar-option' href="#"><AiOutlineSearch /> Search</a>
+        <a className='sidebar-option' href="#"><MdOutlineExplore /> Explore</a>
+        <a className='sidebar-option' href="#"><TfiVideoClapper /> Reels</a>
+        <a className='sidebar-option' href="#"><RiMessengerLine /> Messages</a>
+        <a className='sidebar-option' href="#"><AiOutlineHeart /> Notifications</a>
+        <a className='sidebar-option' href="#"><FiPlusSquare /> Create</a>
+        <a className='sidebar-option' href="#"><RxAvatar /> Profile</a>
       </div>
       <div>
-        <a href="#"><AiOutlineMenu /> More</a>
+        <a className='sidebar-option' href="#"><AiOutlineMenu /> More</a>
       </div>
     </div>
   )

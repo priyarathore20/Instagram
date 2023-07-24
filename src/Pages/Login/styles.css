@@ -80,13 +80,17 @@
 }
 .other-method {
   font-size: 15px;
-  color: #385197;
+  color: white;
   display: flex;
   gap: 8px;
   justify-content: center;
   align-items: center;
   margin-top: 10px;
   font-weight: 800;
+  height: 35px;
+  width: 300px;
+  background-color: rgb(204, 13, 13);
+  border-radius: 4px;
 }
 .to-signup {
   color: #00376b;

@@ -2,9 +2,9 @@ import React, {useState } from 'react';
 import './styles.css';
 import Logo from '../../Components/Logo';
 import Input from '../../Components/Input';
-import { ImFacebook2 } from 'react-icons/im';
+import { FaGoogle } from 'react-icons/fa';
 import app from '../../firebaseConfig'
-import {getAuth, createUserWithEmailAndPassword, signInWithPopup, FacebookAuthProvider} from 'firebase/auth'
+import {getAuth, createUserWithEmailAndPassword, signInWithPopup, GoogleAuthProvider} from 'firebase/auth'
 import { useNavigate } from 'react-router-dom';
 
 const Signup = () => {
@@ -14,10 +14,13 @@ const [username, setUsername] = useState("priya_099")
 const [name, setName] = useState("Priya")
 const auth = getAuth(app)
 const navigate = useNavigate()
-const facebook = new FacebookAuthProvider()
+const googleProvider = new GoogleAuthProvider()
 
-  const loginWithFacebook = () => {
-    signInWithPopup(auth, facebook)
+  const loginWithGoogle = async(e) => {
+    e.preventDefault()
+    signInWithPopup(auth, googleProvider)
+    console.log("user created")
+   await navigate ('/home')
   };
 
   const handleSubmit = async(e) => {
@@ -39,9 +42,9 @@ const facebook = new FacebookAuthProvider()
             Sign up to see photos and <br />
             videos from your friends
           </p>
-          <button className="signup-btn" onClick={loginWithFacebook}>
-            <ImFacebook2 />
-            <span>Log in With Facebook</span>
+          <button className="signup-btn" onClick={loginWithGoogle}>
+            <FaGoogle />
+            <span>Log in With Google</span>
           </button>
           <p className="or">OR</p>
           <form className="form" onSubmit={handleSubmit}>
@@ -71,8 +74,8 @@ const facebook = new FacebookAuthProvider()
                 Cookies policy.
               </a>
             </p>
-            <div className="signup-btn-2">
-              <button className="signup-btn ">Sign up</button>
+            <div >
+              <button className="signup-btn-2" >Sign up</button>
             </div>
           </form>
         </div>
