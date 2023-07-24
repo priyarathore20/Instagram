@@ -13,7 +13,7 @@ const Sidebar = () => {
     <div className='sidebar'>
       <div><Logo/></div>
       <div className='sidebar-options'>
-        <a className='sidebar-option' href="#"><AiFillHome /> Home</a>
+        <a className='sidebar-option' href="/home"><AiFillHome /> Home</a>
         <a className='sidebar-option' href="#"><AiOutlineSearch /> Search</a>
         <a className='sidebar-option' href="#"><MdOutlineExplore /> Explore</a>
         <a className='sidebar-option' href="#"><TfiVideoClapper /> Reels</a>
