@@ -1,5 +1,12 @@
 .Suggestions{
 height: 100%;
-max-width: 100%;
+width: 300px;
 padding: 40px;
+}
+.Suggested{
+  display: flex;
+  gap: 15px;
+  flex-direction: row;
+  width: 140px;
+  height: 40px;
 }

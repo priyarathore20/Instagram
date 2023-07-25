@@ -1,11 +1,31 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './styles.css';
 import Logo from '../../Components/Logo';
 import Input from '../../Components/Input';
 import Link from '../../Components/Link';
 import { FaGoogle } from 'react-icons/fa';
+import {
+  getAuth,
+  signInWithEmailAndPassword,
+  GoogleAuthProvider,
+  signInWithPopup,
+} from 'firebase/auth';
+import app from '../../firebaseConfig';
+import { useNavigate } from 'react-router-dom';
 
 const LoginPage = () => {
+  const auth = getAuth(app);
+  const [email, setEmail] = useState('abc@gmail.com');
+  const [password, setPassword] = useState('password');
+  const navigate = useNavigate();
+
+  const handleClick = (e) => {
+    e.preventDefault();
+    if(app.auth())
+    signInWithEmailAndPassword(auth, email, password);
+    navigate('/home');
+  };
+
   return (
     <>
       <div className="Login">
@@ -17,12 +37,19 @@ const LoginPage = () => {
         <div className="box-1">
           <div className="login-box">
             <Logo />
-            <form className="form">
+            <form className="form" onSubmit={handleClick}>
               <Input
                 type="text"
                 placeholder="Phone number, username or email address"
+                onChange={(e) => setEmail(e.target.value)}
+                value={email}
               />
-              <Input type="password" placeholder="Password" />
+              <Input
+                type="password"
+                placeholder="Password"
+                onChange={(e) => setPassword(e.target.value)}
+                value={password}
+              />
               <button className="login-btn">Log in</button>
             </form>
             <p>OR</p>

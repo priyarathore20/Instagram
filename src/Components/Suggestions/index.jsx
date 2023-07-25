@@ -8,7 +8,7 @@ const Suggestions = () => {
     <div className='Suggestions'>
       <div>
         <Avatar />
-        <div>
+        <div className='suggested'>
           <p className="username">John_Doe</p>
           <p className="full-name">John Doe</p>
         </div>
