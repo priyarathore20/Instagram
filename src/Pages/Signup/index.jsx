@@ -1,45 +1,81 @@
-import React, {useState } from 'react';
+import React, { useState } from 'react';
 import './styles.css';
 import Logo from '../../Components/Logo';
 import Input from '../../Components/Input';
 import { FaGoogle } from 'react-icons/fa';
-import app from '../../firebaseConfig'
-import {getAuth, createUserWithEmailAndPassword, signInWithPopup, GoogleAuthProvider} from 'firebase/auth'
+import app from '../../firebaseConfig';
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  signInWithPopup,
+  GoogleAuthProvider,
+} from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
+import {collection, addDoc, doc} from 'firebase/firestore'
+import "firebase/firestore"
 
 const Signup = () => {
-const [email, setEmail] = useState("abc@gmail.com")
-const [password, setPassword] = useState("password")
-const [username, setUsername] = useState("priya_099")
-const [name, setName] = useState("Priya")
-const auth = getAuth(app)
-const navigate = useNavigate()
-const googleProvider = new GoogleAuthProvider()
+  const [email, setEmail] = useState('abc@gmail.com');
+  const [password, setPassword] = useState('password');
+  const [username, setUsername] = useState('priya_099');
+  const [name, setName] = useState('Priya');
+  const auth = getAuth(app);
+  const navigate = useNavigate();
+  const googleProvider = new GoogleAuthProvider();
+  
 
-  const loginWithGoogle = async(e) => {
-    e.preventDefault()
+  const loginWithGoogle = async (e) => {
+    e.preventDefault();
     try {
-      const data = await signInWithPopup(auth, googleProvider)
-      console.log(data)
+      const data = await signInWithPopup(auth, googleProvider);
+      console.log(data);
       // navigate ('/home')
-          } catch (error) {
-      console.log(error)
+    } catch (error) {
+      console.log(error);
     }
   };
 
-  const handleSubmit = async(e) => {
-    e.preventDefault()
+  const handleSubmit = async (e) => {
+    e.preventDefault();
     try {
-      if(name !== '' && username !== ''){
-      const data = await createUserWithEmailAndPassword(auth, email, password)
-      console.log("user created", data)
-       navigate('/home') 
+      if (name !== '' && username !== '') {
+        const data = await createUserWithEmailAndPassword(
+          auth,
+          email,
+          password
+        );
+        console.log('user created', data);
+        const addDataWithCustomID = () => {
+          const documentID = data.user.uid;
+          const dataToAdd = {
+            name: name,
+            username: username,
+            email: email,
+            gender: '',
+            avatarURL: '',
+            bio: '',
+          };
+          const docRef = app.collection('Profiles').doc(documentID);
+          docRef
+            .set(dataToAdd)
+            .then(() => {
+              console.log(
+                'Data added successfully with custom document ID:',
+                documentID
+              );
+            })
+            .catch((error) => {
+              console.error('Error adding data:', error);
+            });
+        };
+        addDataWithCustomID();
+        navigate('/home');
       }
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
   };
-  
+
   return (
     <>
       <div className="signup">
@@ -57,10 +93,30 @@ const googleProvider = new GoogleAuthProvider()
           </button>
           <p className="or">OR</p>
           <form className="form" onSubmit={handleSubmit}>
-            <Input onChange={e => setEmail(e.target.value)} value={email} type="text" placeholder="Mobile number or email address" />
-            <Input onChange={e => setName(e.target.value)} value={name} type="text" placeholder="Full name" />
-            <Input onChange={e => setUsername(e.target.value)} value={username} type="text" placeholder="Username" />
-            <Input onChange={e => setPassword(e.target.value)} value={password} type="password" placeholder="Password" />
+            <Input
+              onChange={(e) => setEmail(e.target.value)}
+              value={email}
+              type="text"
+              placeholder="Mobile number or email address"
+            />
+            <Input
+              onChange={(e) => setName(e.target.value)}
+              value={name}
+              type="text"
+              placeholder="Full name"
+            />
+            <Input
+              onChange={(e) => setUsername(e.target.value)}
+              value={username}
+              type="text"
+              placeholder="Username"
+            />
+            <Input
+              onChange={(e) => setPassword(e.target.value)}
+              value={password}
+              type="password"
+              placeholder="Password"
+            />
             <p className="signup-terms">
               People who use our service may have uploaded your contact
               information to Instagram.
@@ -83,8 +139,8 @@ const googleProvider = new GoogleAuthProvider()
                 Cookies policy.
               </a>
             </p>
-            <div >
-              <button className="signup-btn-2" >Sign up</button>
+            <div>
+              <button className="signup-btn-2">Sign up</button>
             </div>
           </form>
         </div>

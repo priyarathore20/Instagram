@@ -1,42 +1,41 @@
 import React from 'react'
-import Avatar from '../Avatar'
 import Link from '../Link'
 import "./styles.css"
 
 const Suggestions = () => {
   return (
-    <div className='Suggestions'>
+    <div className='suggest'>
       <div className='suggested'>
         <img src='https://funylife.in/wp-content/uploads/2023/04/58_Cute-Girl-Pic-WWW.FUNYLIFE.IN_-1-1024x1024.jpg' className='avatar-img' />
         <div >
-          <p className="username">John_Doe</p>
-          <p className="full-name">John Doe</p>
+          <p className="username">Zayra.02_</p>
+          <p className="full-name">Zayra Sheikh</p>
         </div>
       </div>
       <p className='suggesteds'>Suggested for you </p>
       <div className="suggested">
-        <Avatar />
+              <img src='https://w0.peakpx.com/wallpaper/856/263/HD-wallpaper-noze-icon-in-2022-really-pretty-girl-cute-girl-pic-ulzzang-girl.jpg' className='avatar-img' />
         <div>
           <p className="username">Virushi20</p>
           <p className="full-name">Virushi jha</p>
         </div>
       </div>
       <div className="suggested">
-        <Avatar />
+        <img src="https://i.pinimg.com/236x/ea/dd/31/eadd31709d797e9b09ab2ac82fba5d63.jpg" className='avatar-img'/>
         <div>
           <p className="username">Hameed0921</p>
           <p className="full-name">Hameed Sheikh</p>
         </div>
       </div>
       <div className="suggested">
-        <Avatar />
+        <img src="https://qph.cf2.quoracdn.net/main-qimg-11d0c7a027d67e01bfd550dc0f0237da-lq" className='avatar-img'/>
         <div>
           <p className="username">Drishti01</p>
           <p className="full-name">Drishti sharma</p>
         </div>
       </div>
       <div className="suggested">
-        <Avatar />
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQwfb0VpLu-UfjBDZwZgOHuM-Hld04NBGAxsINkHwc&s" className='avatar-img'  />
         <div>
           <p className="username">ayush_agg</p>
           <p className="full-name">Ayush Agarwal</p>

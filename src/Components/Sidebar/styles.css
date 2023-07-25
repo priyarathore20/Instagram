@@ -1,14 +1,15 @@
-.sidebar{
+.sidebar {
   display: flex;
   flex-direction: column;
   justify-content: space-around;
   align-items: start;
-height: 100vh;
-max-width: 200px;
-padding: 0 70px 0 20px;
-border-right: 1px rgb(220, 216, 216) solid;
+  height: 100vh;
+  max-width: 200px;
+  padding: 0 70px 0 20px;
+  border-right: 1px rgb(220, 216, 216) solid;
+  position: sticky;
 }
-.sidebar-options{
+.sidebar-options {
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
@@ -16,7 +17,7 @@ border-right: 1px rgb(220, 216, 216) solid;
   gap: 15px;
   height: 400px;
 }
-.sidebar-option{
+.sidebar-option {
   color: black;
   display: flex;
   justify-content: center;
