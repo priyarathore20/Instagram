@@ -6,9 +6,9 @@ import "./styles.css"
 const Suggestions = () => {
   return (
     <div className='Suggestions'>
-      <div>
-        <Avatar />
-        <div className='suggested'>
+      <div className='suggested'>
+        <img src='https://funylife.in/wp-content/uploads/2023/04/58_Cute-Girl-Pic-WWW.FUNYLIFE.IN_-1-1024x1024.jpg' className='avatar-img' />
+        <div >
           <p className="username">John_Doe</p>
           <p className="full-name">John Doe</p>
         </div>

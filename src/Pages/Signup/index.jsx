@@ -18,17 +18,26 @@ const googleProvider = new GoogleAuthProvider()
 
   const loginWithGoogle = async(e) => {
     e.preventDefault()
-    signInWithPopup(auth, googleProvider)
-    console.log("user created")
-   await navigate ('/home')
+    try {
+      const data = await signInWithPopup(auth, googleProvider)
+      console.log(data)
+      // navigate ('/home')
+          } catch (error) {
+      console.log(error)
+    }
   };
 
   const handleSubmit = async(e) => {
     e.preventDefault()
-    if(name !== '' && username !== '')
-    createUserWithEmailAndPassword(auth, email, password)
-    console.log("user created")
-    await navigate('/home') 
+    try {
+      if(name !== '' && username !== ''){
+      const data = await createUserWithEmailAndPassword(auth, email, password)
+      console.log("user created", data)
+       navigate('/home') 
+      }
+    } catch (error) {
+      console.log(error)
+    }
   };
   
   return (

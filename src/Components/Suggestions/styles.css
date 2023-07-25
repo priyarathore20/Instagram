@@ -3,10 +3,17 @@ height: 100%;
 width: 300px;
 padding: 40px;
 }
-.Suggested{
+.suggested{
   display: flex;
   gap: 15px;
   flex-direction: row;
   width: 140px;
   height: 40px;
+  align-items: center;
+  margin-bottom: 20px;
+}
+.avatar-img{
+  border-radius: 50%;
+ height: 56px;
+ width: 56px
 }

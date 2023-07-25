@@ -18,12 +18,25 @@ const LoginPage = () => {
   const [email, setEmail] = useState('abc@gmail.com');
   const [password, setPassword] = useState('password');
   const navigate = useNavigate();
+  const googleProvider = new GoogleAuthProvider();
 
-  const handleClick = (e) => {
+  const handleClick = async (e) => {
     e.preventDefault();
-    if(app.auth())
-    signInWithEmailAndPassword(auth, email, password);
-    navigate('/home');
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
+      navigate('/home');
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const signinWithGoogle = async(e) => {
+    e.preventDefault();
+    try {
+     await signInWithPopup(auth, googleProvider);
+      navigate('/home');
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -53,13 +66,15 @@ const LoginPage = () => {
               <button className="login-btn">Log in</button>
             </form>
             <p>OR</p>
-            <div className="other-method">
+            <button className="other-method" onClick={(signinWithGoogle)}>
               <FaGoogle />
               <p>Log in with Google</p>
-            </div>
+            </button>
+            <div>
             <a href="#" className="to-signup">
               Forgotten your password?
             </a>
+            </div>
           </div>
           <div className="new-account">
             <p>
