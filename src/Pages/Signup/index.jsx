@@ -11,30 +11,70 @@ import {
   GoogleAuthProvider,
 } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
-import {collection, addDoc, doc} from 'firebase/firestore'
-import "firebase/firestore"
+import {
+  doc,
+  getFirestore,
+  setDoc,
+} from 'firebase/firestore';
+import 'firebase/firestore';
+import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, TextField } from '@mui/material';
 
 const Signup = () => {
   const [email, setEmail] = useState('abc@gmail.com');
   const [password, setPassword] = useState('password');
   const [username, setUsername] = useState('priya_099');
+  const [googleUsername, setGoogleUsername] = useState('priya_099');
   const [name, setName] = useState('Priya');
+  const [open, setOpen] = useState(false);
   const auth = getAuth(app);
   const navigate = useNavigate();
   const googleProvider = new GoogleAuthProvider();
-  
+  const db = getFirestore(app);
+
+  const handleOpen = () => {
+    setOpen(true)
+  }
+  const handleClose = () => {
+    setOpen(false)
+    // addDataWithCustomID()
+  }
 
   const loginWithGoogle = async (e) => {
     e.preventDefault();
     try {
       const data = await signInWithPopup(auth, googleProvider);
+      handleOpen()
       console.log(data);
-      // navigate ('/home')
+      const addDataWithCustomID = () => {
+        const documentID = data.user.uid;
+        const dataToAdd = {
+          name: data.user.displayName,
+          username: googleUsername,
+          email: data.user.email,
+          gender: '',
+          avatarURL: data.user.photoURL,
+          bio: '',
+        };
+        const docRef = doc(db, 'Profiles', documentID);
+        setDoc(docRef, dataToAdd)
+          .then(() => {
+            console.log(
+              'Data added successfully with custom document ID:',
+              documentID
+            );
+          })
+          .catch((error) => {
+            console.error('Error adding data:', error);
+          });
+      };
+      addDataWithCustomID();
+      navigate ('/home')
     } catch (error) {
       console.log(error);
     }
   };
 
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -55,9 +95,8 @@ const Signup = () => {
             avatarURL: '',
             bio: '',
           };
-          const docRef = app.collection('Profiles').doc(documentID);
-          docRef
-            .set(dataToAdd)
+          const docRef = doc(db, 'Profiles', documentID);
+          setDoc(docRef, dataToAdd)
             .then(() => {
               console.log(
                 'Data added successfully with custom document ID:',
@@ -145,6 +184,30 @@ const Signup = () => {
           </form>
         </div>
       </div>
+      <div>
+           <Dialog open={open} onClose={handleClose}>
+        <DialogTitle>Set Username</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            Set a unique username for your account.
+          </DialogContentText>
+          <TextField
+                      autoFocus
+            margin="dense"
+            label="Email Address"
+            type="text"
+            fullWidth
+            variant="standard"
+            onChange={e=> setGoogleUsername(e.target.value)}
+            value={googleUsername}
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose} >Save</Button>
+        </DialogActions>
+      </Dialog>
+    </div>
+
     </>
   );
 };
