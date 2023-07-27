@@ -12,12 +12,24 @@ import {
 } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
 import {
+  collection,
   doc,
+  getDocs,
   getFirestore,
+  query,
   setDoc,
+  where,
 } from 'firebase/firestore';
 import 'firebase/firestore';
-import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, TextField } from '@mui/material';
+import {
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  TextField,
+} from '@mui/material';
 
 const Signup = () => {
   const [email, setEmail] = useState('abc@gmail.com');
@@ -26,66 +38,90 @@ const Signup = () => {
   const [googleUsername, setGoogleUsername] = useState('priya_099');
   const [name, setName] = useState('Priya');
   const [open, setOpen] = useState(false);
+  const [googleLoginData, setGoogleLoginData] = useState();
   const auth = getAuth(app);
   const navigate = useNavigate();
   const googleProvider = new GoogleAuthProvider();
   const db = getFirestore(app);
 
   const handleOpen = () => {
-    setOpen(true)
-  }
+    setOpen(true);
+  };
   const handleClose = () => {
-    setOpen(false)
-    // addDataWithCustomID()
-  }
+    setOpen(false);
+  };
+  const checkValueInFirestore = async (username) => {
+    const collectionRef = collection(db, 'Profiles');
+    const q = query(collectionRef, where('username', '==', username));
+    const querySnapshot = await getDocs(q);
+  };
 
-  const loginWithGoogle = async (e) => {
-    e.preventDefault();
+  const handleSave = async () => {
     try {
-      const data = await signInWithPopup(auth, googleProvider);
-      handleOpen()
-      console.log(data);
-      const addDataWithCustomID = () => {
-        const documentID = data.user.uid;
-        const dataToAdd = {
-          name: data.user.displayName,
-          username: googleUsername,
-          email: data.user.email,
-          gender: '',
-          avatarURL: data.user.photoURL,
-          bio: '',
-        };
-        const docRef = doc(db, 'Profiles', documentID);
-        setDoc(docRef, dataToAdd)
-          .then(() => {
-            console.log(
-              'Data added successfully with custom document ID:',
-              documentID
-            );
-          })
-          .catch((error) => {
-            console.error('Error adding data:', error);
-          });
-      };
-      addDataWithCustomID();
-      navigate ('/home')
+      if (googleUsername !== '') {
+        let usernameTaken = await checkValueInFirestore(username);
+        if (usernameTaken) {
+          alert('Username already taken');
+        } else {
+          const documentID = googleLoginData.user.uid;
+          const dataToAdd = {
+            name: googleLoginData.user.displayName,
+            username: googleUsername,
+            email: googleLoginData.user.email,
+            gender: '',
+            avatarURL: googleLoginData.user.photoURL,
+            bio: '',
+          };
+          await addDataWithCustomID(documentID, dataToAdd);
+          navigate('/home');
+          setOpen(false);
+        }
+      }
     } catch (error) {
       console.log(error);
     }
   };
 
-  
+  const addDataWithCustomID = async (documentID, dataToAdd) => {
+    const docRef = doc(db, 'Profiles', documentID);
+    setDoc(docRef, dataToAdd)
+      .then(() => {
+        console.log(
+          'Data added successfully with custom document ID:',
+          documentID
+        );
+      })
+      .catch((error) => {
+        console.error('Error adding data:', error);
+      });
+  };
+
+  const loginWithGoogle = async (e) => {
+    e.preventDefault();
+    try {
+      const data = await signInWithPopup(auth, googleProvider);
+      setGoogleLoginData(data);
+      handleOpen();
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       if (name !== '' && username !== '') {
-        const data = await createUserWithEmailAndPassword(
-          auth,
-          email,
-          password
-        );
-        console.log('user created', data);
-        const addDataWithCustomID = () => {
+        let usernameTaken = await checkValueInFirestore(username);
+        if (usernameTaken) {
+          alert('Username already taken');
+        } else {
+          const data = await createUserWithEmailAndPassword(
+            auth,
+            email,
+            password
+          );
+          console.log('user created', data);
           const documentID = data.user.uid;
           const dataToAdd = {
             name: name,
@@ -95,20 +131,9 @@ const Signup = () => {
             avatarURL: '',
             bio: '',
           };
-          const docRef = doc(db, 'Profiles', documentID);
-          setDoc(docRef, dataToAdd)
-            .then(() => {
-              console.log(
-                'Data added successfully with custom document ID:',
-                documentID
-              );
-            })
-            .catch((error) => {
-              console.error('Error adding data:', error);
-            });
-        };
-        addDataWithCustomID();
-        navigate('/home');
+          await addDataWithCustomID(documentID, dataToAdd);
+          navigate('/home');
+        }
       }
     } catch (error) {
       console.log(error);
@@ -185,29 +210,28 @@ const Signup = () => {
         </div>
       </div>
       <div>
-           <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>Set Username</DialogTitle>
-        <DialogContent>
-          <DialogContentText>
-            Set a unique username for your account.
-          </DialogContentText>
-          <TextField
-                      autoFocus
-            margin="dense"
-            label="Email Address"
-            type="text"
-            fullWidth
-            variant="standard"
-            onChange={e=> setGoogleUsername(e.target.value)}
-            value={googleUsername}
-          />
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose} >Save</Button>
-        </DialogActions>
-      </Dialog>
-    </div>
-
+        <Dialog open={open} onClose={handleClose}>
+          <DialogTitle>Set Username</DialogTitle>
+          <DialogContent>
+            <DialogContentText>
+              Set a unique username for your account.
+            </DialogContentText>
+            <TextField
+              autoFocus
+              margin="dense"
+              type="text"
+              fullWidth
+              variant="standard"
+              onChange={(e) => setGoogleUsername(e.target.value)}
+              value={googleUsername}
+            />
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleClose}>cancel</Button>
+            <Button onClick={handleSave}>Save</Button>
+          </DialogActions>
+        </Dialog>
+      </div>
     </>
   );
 };
