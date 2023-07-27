@@ -1,0 +1,39 @@
+.edit{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.app{
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: column;
+  height: 90vh;
+  width: 400px;
+  border: 1px solid #ccc;
+  margin-top: 20px;
+}
+.edit-form{
+  height: 600px;
+  width: 350px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-direction: column;
+}
+.upload-img{
+  font-size: 16px;
+  text-align: center;
+  margin-top: 8px;
+}
+.edit-btn{
+  height: 28px;
+  width: 80px;
+  padding: 5px;
+  margin: 30px 0;
+  font-size: 16px;
+  background-color: rgb(48, 175, 221);
+  border: none;
+  color: #fff;
+  border-radius: 4px;
+}
