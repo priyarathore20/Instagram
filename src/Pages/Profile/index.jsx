@@ -1,8 +1,15 @@
 import React from 'react'
 import Sidebar from '../../Components/Sidebar'
 import "./styles.css"
+import { useNavigate } from 'react-router-dom'
 
 const ProfilePage = () => {
+  const navigate = useNavigate()
+
+const handleClick = () => {
+  navigate('/edit-profile')
+}
+
   return (
     <div className='profile-section'>
       <div><Sidebar /></div>
@@ -14,7 +21,7 @@ const ProfilePage = () => {
           <div className="profile-details">
             <div className="profile-username">
               <h4 className="profile-username-name">Zayra</h4>
-              <button className="profile-username-btn">Edit profile</button>
+              <button className="profile-username-btn" onClick={handleClick}>Edit profile</button>
             </div>
             <div className="followers">
               <p className="follower">500 followers</p>

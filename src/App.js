@@ -4,6 +4,7 @@ import Signup from './Pages/Signup';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Homepage from './Pages/Home';
 import ProfilePage from './Pages/Profile';
+import EditPage from './Pages/EditProfile';
 
 const App = () => {
   return (
@@ -14,6 +15,7 @@ const App = () => {
           <Route path="/Signup" element={<Signup />} />
           <Route path="/home" element={<Homepage />} />
           <Route path="/profile" element={<ProfilePage />} />
+          <Route path="/edit-profile" element={<EditPage />} />
         </Routes>
       </BrowserRouter>
     </>
