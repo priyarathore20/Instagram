@@ -55,3 +55,14 @@ margin: 50px 80px;
     font-size: 16px;
 font-weight: 500;
   }
+  .profile-images{
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    align-items: center;
+    width: 1000px;
+  }
+  .profile-img{
+    height: 350px;
+    width: 300px;
+  }
