@@ -53,13 +53,21 @@ const Signup = () => {
   const checkValueInFirestore = async (username) => {
     const collectionRef = collection(db, 'Profiles');
     const q = query(collectionRef, where('username', '==', username));
+    // Execute the query and get the result
     const querySnapshot = await getDocs(q);
+
+    if (querySnapshot.empty) {
+      return true;
+    } else {
+      return false;
+    }
   };
 
   const handleSave = async () => {
     try {
       if (googleUsername !== '') {
-        let usernameTaken = await checkValueInFirestore(username);
+        let usernameTaken = await checkValueInFirestore(googleUsername);
+        console.log(usernameTaken);
         if (usernameTaken) {
           alert('Username already taken');
         } else {
