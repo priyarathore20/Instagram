@@ -1,4 +1,4 @@
-import React, {  useState } from 'react';
+import React, {  useContext, useState } from 'react';
 import './styles.css';
 import Logo from '../../Components/Logo';
 import Input from '../../Components/Input';
@@ -30,6 +30,7 @@ import {
   DialogTitle,
   TextField,
 } from '@mui/material';
+import AppContext from '../../Context/AppContext';
 
 const Signup = () => {
   const [email, setEmail] = useState('abc@gmail.com');
@@ -43,6 +44,7 @@ const Signup = () => {
   const navigate = useNavigate();
   const googleProvider = new GoogleAuthProvider();
   const db = getFirestore(app);
+  const {setCurrentUser, setGoogleCurrentUser} = useContext(AppContext)
 
   const handleOpen = () => {
     setOpen(true);
@@ -81,7 +83,8 @@ const Signup = () => {
             bio: '',
           };
           await addDataWithCustomID(documentID, dataToAdd);
-          // navigate('/home');
+          navigate('/home');
+          setGoogleCurrentUser(googleLoginData)
           setOpen(false);
         }
       }
@@ -108,9 +111,8 @@ const Signup = () => {
     e.preventDefault();
     try {
       const data = await signInWithPopup(auth, googleProvider);
-      localStorage.setItem('user', JSON.stringify(data))
-      console.log(localStorage.setItem('user', JSON.stringify(data)))
       setGoogleLoginData(data);
+      setCurrentUser(data)
       handleOpen();
       console.log(localStorage.setItem('user', JSON.stringify(data)))
       console.log(data);
