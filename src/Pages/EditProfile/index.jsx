@@ -4,11 +4,12 @@ import Input from '../../Components/Input';
 import Logo from '../../Components/Logo';
 import { doc, getFirestore, setDoc } from 'firebase/firestore';
 import app from '../../firebaseConfig';
-import AppContext from '../../Context/AppContext';
 import { getDownloadURL, getStorage, ref, uploadBytes } from 'firebase/storage';
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
 
 const EditPage = () => {
   const [username, setUsername] = useState('');
+  const [userId, setUserId] = useState('');
   const [fullName, setFullName] = useState('');
   const [bio, setBio] = useState('');
   const [image, setImage] = useState(null);
@@ -16,63 +17,43 @@ const EditPage = () => {
   const [gender, setGender] = useState('');
   const db = getFirestore(app);
   const storage = getStorage(app);
-  const { currentUser, googleCurrentUser } = useContext(AppContext);
+  const auth = getAuth(app);
 
-  const updateUserInfo = async (userId, dataToUpdate) => {
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      const uid = user.uid;
+      setUserId(uid);
+    }
+  });
+
+  const updateUserInfo = async (uid, dataToUpdate) => {
     try {
-      const userRef = doc(db, 'Profiles', userId);
-      await setDoc(userRef, dataToUpdate, { merge: true });
-      console.log('User info updated successfully');
+      const userRef = doc(db, 'Profiles', uid);
+      await setDoc(userRef, dataToUpdate);
+      console.log('Updated');
     } catch (error) {
-      console.error('Error updating user info:', error);
+      console.error(error);
     }
   };
 
-  const handleImageChange = (e) => {
-    const selectedImage = e.target.files[0];
-    setImage(selectedImage);
-  };
+  const handleImageChange = (e) => {};
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    let avatarURL = ''; // Initialize avatarURL
-    try {
-      if (image) {
-        // Upload the image to Firebase Storage
-        const imageRef = ref(storage, `profileImages/${image.name}`);
-        await uploadBytes(imageRef, image);
-
-        // Get the download URL of the uploaded image
-        avatarURL = await getDownloadURL(imageRef);
-      }
-
-      if (currentUser) {
-        const { uid, email, displayName, photoURL } = currentUser.data;
-        const dataToUpdate = {
-          name: displayName,
-          username: username,
-          email: email,
-          avatarURL: avatarURL || photoURL || '',
-          bio: bio,
-          gender: gender,
-        };
-        updateUserInfo(uid, dataToUpdate);
-      } else {
-        const { uid, email, displayName, photoURL } = googleCurrentUser;
-        const dataToUpdate = {
-          name: displayName,
-          username: username,
-          email: email,
-          avatarURL: avatarURL || photoURL || '',
-          bio: bio,
-          gender: gender,
-        };
-        updateUserInfo(uid, dataToUpdate);
-      }
-    } catch (error) {
-      console.log(error);
-    }
+    const userIdToUpdate = userId;
+    const dataToUpdate = {
+      name: fullName,
+      username: username,
+      email: email,
+      bio: bio,
+      gender: gender,
+      avatarURL: '',
+    };
   };
+
+  updateUserInfo(userIdToUpdate, dataToUpdate);
+
+  //       }
 
   return (
     <div className="edit">

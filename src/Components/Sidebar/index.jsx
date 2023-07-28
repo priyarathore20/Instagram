@@ -20,7 +20,7 @@ const Sidebar = () => {
         <a className='sidebar-option' href="#"><RiMessengerLine /> Messages</a>
         <a className='sidebar-option' href="#"><AiOutlineHeart /> Notifications</a>
         <a className='sidebar-option' href="#"><FiPlusSquare /> Create</a>
-        <a className='sidebar-option' href="#"><RxAvatar /> Profile</a>
+        <a className='sidebar-option' href="/profile"><RxAvatar /> Profile</a>
       </div>
       <div>
         <a className='sidebar-option' href="#"><AiOutlineMenu /> More</a>
