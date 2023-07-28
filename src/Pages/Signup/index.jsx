@@ -81,7 +81,8 @@ const Signup = () => {
             bio: '',
           };
           await addDataWithCustomID(documentID, dataToAdd);
-          navigate('/home');
+          console.log(addDataWithCustomID)
+          // navigate('/home');
           setOpen(false);
         }
       }
