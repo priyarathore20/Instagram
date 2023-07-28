@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './styles.css';
 import Logo from '../../Components/Logo';
 import Input from '../../Components/Input';
@@ -10,7 +10,7 @@ import {
   signInWithPopup,
   GoogleAuthProvider,
 } from 'firebase/auth';
-import { useNavigate } from 'react-router-dom';
+import { json, useNavigate } from 'react-router-dom';
 import {
   collection,
   doc,
@@ -51,17 +51,17 @@ const Signup = () => {
     setOpen(false);
   };
   const checkValueInFirestore = async (username) => {
-    const collectionRef = collection(db, 'Profiles');
-    const q = query(collectionRef, where('username', '==', username));
-    // Execute the query and get the result
-    const querySnapshot = await getDocs(q);
-
-    if (querySnapshot.empty) {
-      return true;
-    } else {
-      return false;
+    try {
+      const collectionRef = collection(db, 'Profiles');
+      const q = query(collectionRef, where('username', '==', username));
+      // Execute the query and get the result
+      const querySnapshot = await getDocs(q);
+       return !querySnapshot.empty   
+    } catch (error) {
+     console.log(error) 
+     return true;
     }
-  };
+     };
 
   const handleSave = async () => {
     try {
@@ -81,7 +81,6 @@ const Signup = () => {
             bio: '',
           };
           await addDataWithCustomID(documentID, dataToAdd);
-          console.log(addDataWithCustomID)
           // navigate('/home');
           setOpen(false);
         }
@@ -109,13 +108,17 @@ const Signup = () => {
     e.preventDefault();
     try {
       const data = await signInWithPopup(auth, googleProvider);
+      localStorage.setItem('user', JSON.stringify(data))
+      console.log(localStorage.setItem('user', JSON.stringify(data)))
       setGoogleLoginData(data);
       handleOpen();
+      console.log(localStorage.setItem('user', JSON.stringify(data)))
       console.log(data);
     } catch (error) {
       console.log(error);
     }
   };
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
