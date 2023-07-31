@@ -5,7 +5,7 @@ import { FaSearch } from 'react-icons/fa';
 import axios from 'axios';
 
 const SearchPage = () => {
-  const [images, setImages] = useState();
+  const [images, setImages] = useState([]);
   const [query, setQuery] = useState();
 
   const fetchImages = async (e) => {
@@ -28,28 +28,29 @@ const SearchPage = () => {
   };
 
   return (
-    <div>
+    <div className='explore-page'>
       <div>
         <Sidebar />
       </div>
       <div className="explore">
         <form onSubmit={fetchImages}>
           <input
+          className='explore-input'
             type="search"
             placeholder="Explore images"
             onChange={(e) => setQuery(e.target.value)}
             value={query}
           />
-          <button type="submit">
+          <button className='explore-btn' type="submit">
             <FaSearch />
           </button>{' '}
         </form>
         <div className="explore-img">
-          {images.map((img) => {
+          {images.map((img) => (
               <div key={img.id}>
               <img src={img.src.medium} alt={img.photographer} />
             </div>
-          })}
+          ))}
         </div>
       </div>
     </div>
