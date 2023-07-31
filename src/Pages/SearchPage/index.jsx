@@ -43,12 +43,12 @@ const SearchPage = () => {
           />
           <button className='explore-btn' type="submit">
             <FaSearch />
-          </button>{' '}
+          </button>
         </form>
         <div className="explore-img">
           {images.map((img) => (
-              <div key={img.id}>
-              <img src={img.src.medium} alt={img.photographer} />
+              <div key={img.id} className='searched-images'>
+              <img src={img.src.original} alt={img.photographer} />
             </div>
           ))}
         </div>
