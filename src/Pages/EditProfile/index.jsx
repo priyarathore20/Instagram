@@ -49,9 +49,9 @@ const EditPage = () => {
       gender: gender,
       avatarURL: '',
     };
+  updateUserInfo(userIdToUpdate, dataToUpdate);
   };
 
-  updateUserInfo(userIdToUpdate, dataToUpdate);
 
   //       }
 
