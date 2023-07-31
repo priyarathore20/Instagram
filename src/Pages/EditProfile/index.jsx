@@ -28,8 +28,9 @@ const EditPage = () => {
 
   const updateUserInfo = async (uid, dataToUpdate) => {
     try {
-      const userRef = doc(db, 'Profiles', uid);
-      await setDoc(userRef, dataToUpdate);
+      // const userRef = doc(db, 'Profiles', uid);
+      // await setDoc(userRef, dataToUpdate);
+      await setDoc(doc(db, "Profiles", uid), dataToUpdate)
       console.log('Updated');
     } catch (error) {
       console.error(error);
@@ -52,9 +53,6 @@ const EditPage = () => {
   updateUserInfo(userIdToUpdate, dataToUpdate);
   };
 
-
-  //       }
-
   return (
     <div className="edit">
       <div className="app">
@@ -65,7 +63,7 @@ const EditPage = () => {
           <h2>Edit your profile :</h2>
           <div>
             <Input
-              placeholder="Set username"
+              placeholder="New username"
               type="text"
               onChange={(e) => setUsername(e.target.value)}
               value={username}
