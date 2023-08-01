@@ -26,3 +26,26 @@
   gap: 15px;
   letter-spacing: 0.2px;
 }
+.dropup-menu{
+  display: inline-block;
+  position: relative;
+}
+.menu-item{
+  position: absolute;
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  min-width: 120px;
+  padding: 8px;
+  text-align: center;
+}
+.menu-item a{
+  display: block;
+  color: black;
+  font-weight: bold;
+  padding: 8px 0;
+}
+.menu-item a:hover{
+background-color: #ddd; 
+}

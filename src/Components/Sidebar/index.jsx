@@ -62,18 +62,19 @@ const Sidebar = () => {
           <RxAvatar /> Profile
         </a>
       </div>
-      <div>
+      <div className='dropup-menu'>
         <a className="sidebar-option" href="#" onClick={handleMenu}>
           <AiOutlineMenu /> More
         </a>
         {isOpen && (
-          <div className="menu-items">
+          <div className="menu-item">
             <a href="#" onClick={onLogout}>
               Log out
             </a>
           </div>
         )}
       </div>
+
     </div>
   );
 };
