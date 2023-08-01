@@ -91,6 +91,9 @@
   width: 300px;
   background-color: rgb(204, 13, 13);
   border-radius: 4px;
+  outline: none;
+  border: none;
+  margin-bottom: 10px;
 }
 .to-signup {
   color: #00376b;

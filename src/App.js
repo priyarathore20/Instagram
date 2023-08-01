@@ -16,8 +16,8 @@ const App = () => {
 
   useEffect(() => {
     if (user != null) {
-      user;
-      console.log(user);
+      // console.log(user);
+      return user;
     }
   }, []);
 
@@ -37,7 +37,7 @@ const App = () => {
                   !isProtected || isAuthenticated ? (
                     <Component />
                   ) : (
-                    <Navigate to="/login" replace />
+                    <Navigate to="/" replace />
                   )
                 }
               />
