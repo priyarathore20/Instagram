@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react';
 import './styles.css';
 import Input from '../../Components/Input';
 import Logo from '../../Components/Logo';
-import { doc, getFirestore, setDoc } from 'firebase/firestore';
+import { doc, getFirestore, updateDoc } from 'firebase/firestore';
 import app from '../../firebaseConfig';
 import { getDownloadURL, getStorage, ref, uploadBytes } from 'firebase/storage';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
@@ -30,7 +30,7 @@ const EditPage = () => {
     try {
       // const userRef = doc(db, 'Profiles', uid);
       // await setDoc(userRef, dataToUpdate);
-      await setDoc(doc(db, "Profiles", uid), dataToUpdate)
+      await updateDoc(doc(db, "Profiles", uid), dataToUpdate)
       console.log('Updated');
     } catch (error) {
       console.error(error);

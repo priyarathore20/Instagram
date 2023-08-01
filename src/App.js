@@ -1,23 +1,48 @@
-import React from 'react';
-import LoginPage from './Pages/Login';
-import Signup from './Pages/Signup';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import Homepage from './Pages/Home';
-import ProfilePage from './Pages/Profile';
-import EditPage from './Pages/EditProfile';
-import SearchPage from './Pages/SearchPage';
+import React, { useEffect, useState } from 'react';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import app from './firebaseConfig';
+import { routes } from './Router/routes';
 
 const App = () => {
+  const auth = getAuth(app);
+  const [user, setUser] = useState(null);
+
+  onAuthStateChanged(auth, (user) => {
+    const userId = user?.uid;
+    setUser(userId);
+  });
+
+  useEffect(() => {
+    if (user != null) {
+      user;
+      console.log(user);
+    }
+  }, []);
+
   return (
     <>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<LoginPage />} />
-          <Route path="/Signup" element={<Signup />} />
-          <Route path="/home" element={<Homepage />} />
-          <Route path="/profile" element={<ProfilePage />} />
-          <Route path="/edit-profile" element={<EditPage />} />
-          <Route path="/explore" element={<SearchPage />} />
+          {routes.map((item) => {
+            const { name, component: Component, isProtected, path } = item;
+            const isAuthenticated = user != null;
+
+            return (
+              <Route
+                key={name}
+                path={path}
+                element={
+                  !isProtected || isAuthenticated ? (
+                    <Component />
+                  ) : (
+                    <Navigate to="/login" replace />
+                  )
+                }
+              />
+            );
+          })}
         </Routes>
       </BrowserRouter>
     </>
