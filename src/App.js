@@ -14,12 +14,7 @@ const App = () => {
     setUser(userId);
   });
 
-  useEffect(() => {
-    if (user != null) {
-      // console.log(user);
-      return user;
-    }
-  }, []);
+  // setUser(currentUser)
 
   return (
     <>
@@ -27,7 +22,7 @@ const App = () => {
         <Routes>
           {routes.map((item) => {
             const { name, component: Component, isProtected, path } = item;
-            const isAuthenticated = user != null;
+            const isAuthenticated = auth.currentUser != null;
 
             return (
               <Route

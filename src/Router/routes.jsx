@@ -23,7 +23,7 @@ export const routes = [
     name: 'Edit Profile',
     path: '/edit-profile',
     component: EditPage,
-    isProtected: true,
+    isProtected: false,
   },
   {
     name: 'home',
@@ -34,7 +34,7 @@ export const routes = [
     name: 'Profile',
     path: '/profile',
     component: ProfilePage,
-    isProtected: true,
+    isProtected: false,
   },{
     name: 'Explore',
     path: '/explore',

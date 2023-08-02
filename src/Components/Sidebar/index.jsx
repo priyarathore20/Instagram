@@ -11,17 +11,24 @@ import { MdOutlineExplore } from 'react-icons/md';
 import { TfiVideoClapper } from 'react-icons/tfi';
 import { RiMessengerLine } from 'react-icons/ri';
 import { FiPlusSquare } from 'react-icons/fi';
+import {FaRegImages} from 'react-icons/fa'
 import { RxAvatar } from 'react-icons/rx';
 import app from '../../firebaseConfig';
 import { getAuth } from 'firebase/auth';
+import { Link } from 'react-router-dom';
 
 const Sidebar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
   const auth = getAuth(app);
 
-  const handleMenu = () => {
+  const handleOpen = () => {
     setIsOpen(true);
   };
+
+  const dialogOpen = () => {
+    setIsDialogOpen(true)
+  }
 
   const onLogout = async () => {
     try {
@@ -58,12 +65,12 @@ const Sidebar = () => {
         <a className="sidebar-option" href="#">
           <FiPlusSquare /> Create
         </a>
-        <a className="sidebar-option" href="/profile">
+        <Link className="sidebar-option" to="/profile">
           <RxAvatar /> Profile
-        </a>
+        </Link>
       </div>
       <div className='dropup-menu'>
-        <a className="sidebar-option" href="#" onClick={handleMenu}>
+        <a className="sidebar-option" href="#" onClick={handleOpen}>
           <AiOutlineMenu /> More
         </a>
         {isOpen && (
@@ -74,7 +81,14 @@ const Sidebar = () => {
           </div>
         )}
       </div>
-
+      {isDialogOpen && 
+<div className="dialog" onClick={dialogOpen}>
+  <div className="bar">Create new post</div>
+  <div>
+  <div className="content"><FaRegImages /> Drag photos and videos here.</div>
+  <button className="content-btn">Select from computer</button>
+  </div>
+</div>}
     </div>
   );
 };
