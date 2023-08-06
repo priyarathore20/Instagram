@@ -1,10 +1,11 @@
 import Homepage from '../Pages/Home';
 import ProfilePage from '../Pages/Profile';
 import EditPage from '../Pages/EditProfile';
-import SearchPage from '../Pages/SearchPage';
+import ExplorePage from '../Pages/ExplorePage';
 import LoginPage from '../Pages/Login';
 import Signup from '../Pages/Signup';
 import NotFound from '../Pages/404';
+import SearchPage from '../Pages/SearchPage';
 
 export const routes = [
   {
@@ -38,6 +39,11 @@ export const routes = [
   },{
     name: 'Explore',
     path: '/explore',
+    component: ExplorePage,
+    isProtected: true,
+  },{
+    name: 'Search',
+    path: '/search',
     component: SearchPage,
     isProtected: true,
   },{

@@ -6,7 +6,7 @@ import { getAuth } from 'firebase/auth';
 import app from '../../firebaseConfig';
 
 const ProfilePage = () => {
-  const [user, setUser] = useState('');
+  const [user, setUser] = useState();
 
   const navigate = useNavigate();
   const auth = getAuth(app);

@@ -1,56 +1,37 @@
+import { Avatar } from '@mui/material';
 import React, { useState } from 'react';
-import './styles.css';
-import Sidebar from '../../Components/Sidebar';
-import { FaSearch } from 'react-icons/fa';
-import axios from 'axios';
+import {FaSearch} from 'react-icons/fa'
+import {getFirestore, collection } from 'firebase/firestore'
 
 const SearchPage = () => {
-  const [images, setImages] = useState([]);
-  const [query, setQuery] = useState();
+  const [query, setQuery] = useState('');
+  const [fetchedUsers, setFetchedUsers] = useState('')
+  const db = getFirestore()
 
-  const fetchImages = async (e) => {
-    e.preventDefault();
-    const API_KEY = 'YBIS948QnPNViuGVdQFH1E6gYyHuoL68oE14bI8TnDsleungT22TlIML';
-    try {
-      const data = await axios.get(
-        'https://api.pexels.com/v1/search?query=' + query + '&per_page=100',
-        {
-          headers: {
-            Authorization: API_KEY,
-          },
-        }
-      );
-      console.log(data);
-      setImages(data.data.photos);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+const initial = fetchedUsers.charAt[0]
+const result = db.collection('Profiles').where('name', '==', query ).get()
+setFetchedUsers(result)
 
   return (
-    <div className='explore-page'>
+    <div>
+      <form>
+        <input
+          type="text"
+          placeholder="Search here..."
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+        />
+        <button className="explore-btn" type="submit">
+          <FaSearch />
+        </button>
+      </form>
       <div>
-        <Sidebar />
-      </div>
-      <div className="explore">
-        <form onSubmit={fetchImages}>
-          <input
-          className='explore-input'
-            type="search"
-            placeholder="Explore images"
-            onChange={(e) => setQuery(e.target.value)}
-            value={query}
-          />
-          <button className='explore-btn' type="submit">
-            <FaSearch />
-          </button>
-        </form>
-        <div className="explore-img">
-          {images.map((img) => (
-              <div key={img.id} className='searched-images'>
-              <img src={img.src.original} alt={img.photographer} />
-            </div>
-          ))}
+        <div className="search-card">
+          <div><Avatar>{initial}</Avatar></div>
+          <div>
+            <p>{fetchedUsers.username}</p>
+            <p>{fetchedUsers.name}</p>
+          </div>
         </div>
       </div>
     </div>
