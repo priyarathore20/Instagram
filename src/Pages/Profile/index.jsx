@@ -11,12 +11,8 @@ const ProfilePage = () => {
   const navigate = useNavigate();
   const auth = getAuth(app);
 
-  onAuthStateChanged(auth, (user) => {
-    if (user) {
-      const uid = user.uid;
-      setUser(uid);
-    }
-  });
+const currentUser = auth.currentUser
+setUser(currentUser)
 
   const handleClick = () => {
     navigate('/edit-profile');
