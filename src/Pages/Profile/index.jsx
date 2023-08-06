@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Sidebar from '../../Components/Sidebar';
 import './styles.css';
 import { useNavigate } from 'react-router-dom';
-import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import { getAuth } from 'firebase/auth';
 import app from '../../firebaseConfig';
 
 const ProfilePage = () => {
