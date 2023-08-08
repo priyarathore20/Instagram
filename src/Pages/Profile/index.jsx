@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Sidebar from '../../Components/Sidebar';
 import './styles.css';
 import { useNavigate } from 'react-router-dom';
@@ -6,19 +6,24 @@ import { getAuth } from 'firebase/auth';
 import app from '../../firebaseConfig';
 
 const ProfilePage = () => {
-  const [user, setUser] = useState();
+  const [user, setUser] = useState(null); // Initialize user as null
 
   const navigate = useNavigate();
   const auth = getAuth(app);
 
-const currentUser = auth.currentUser
-setUser(currentUser)
+  useEffect(() => {
+    // Fetch user data when component mounts
+    const currentUser = auth.currentUser;
+    if (currentUser) {
+      setUser(currentUser);
+    }
+  }, []);
 
   const handleClick = () => {
     navigate('/edit-profile');
   };
 
-  return (
+  return user ? (
     <div className="profile-section">
       <div>
         <Sidebar />
@@ -29,6 +34,7 @@ setUser(currentUser)
             <img
               src="https://funylife.in/wp-content/uploads/2023/04/58_Cute-Girl-Pic-WWW.FUNYLIFE.IN_-1-1024x1024.jpg"
               className="avatar-img-1"
+              alt="User Avatar"
             />
           </div>
           <div className="profile-details">
@@ -94,7 +100,7 @@ setUser(currentUser)
         </div>
       </div>
     </div>
-  );
+  ) : null;
 };
 
 export default ProfilePage;

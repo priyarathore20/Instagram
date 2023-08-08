@@ -11,7 +11,7 @@ import { MdOutlineExplore } from 'react-icons/md';
 import { TfiVideoClapper } from 'react-icons/tfi';
 import { RiMessengerLine } from 'react-icons/ri';
 import { FiPlusSquare } from 'react-icons/fi';
-import {FaRegImages} from 'react-icons/fa'
+import { FaRegImages } from 'react-icons/fa';
 import { RxAvatar } from 'react-icons/rx';
 import app from '../../firebaseConfig';
 import { getAuth } from 'firebase/auth';
@@ -27,8 +27,8 @@ const Sidebar = () => {
   };
 
   const dialogOpen = () => {
-    setIsDialogOpen(true)
-  }
+    setIsDialogOpen(true);
+  };
 
   const onLogout = async () => {
     try {
@@ -44,51 +44,54 @@ const Sidebar = () => {
         <Logo />
       </div>
       <div className="sidebar-options">
-        <a className="sidebar-option" href="/home">
+        <Link className="sidebar-option" to="/home">
           <AiFillHome /> Home
-        </a>
-        <a className="sidebar-option" href="/search">
+        </Link>
+        <Link className="sidebar-option" to="/search">
           <AiOutlineSearch /> Search
-        </a>
-        <a className="sidebar-option" href="/explore">
+        </Link>
+        <Link className="sidebar-option" to="/explore">
           <MdOutlineExplore /> Explore
-        </a>
-        <a className="sidebar-option" href="#">
+        </Link>
+        <Link className="sidebar-option" to="#">
           <TfiVideoClapper /> Reels
-        </a>
-        <a className="sidebar-option" href="#">
+        </Link>
+        <Link className="sidebar-option" to="#">
           <RiMessengerLine /> Messages
-        </a>
-        <a className="sidebar-option" href="#">
+        </Link>
+        <Link className="sidebar-option" to="#">
           <AiOutlineHeart /> Notifications
-        </a>
-        <a className="sidebar-option" href="#">
+        </Link>
+        <Link className="sidebar-option" to="#">
           <FiPlusSquare /> Create
-        </a>
+        </Link>
         <Link className="sidebar-option" to="/profile">
           <RxAvatar /> Profile
         </Link>
       </div>
-      <div className='dropup-menu'>
-        <a className="sidebar-option" href="#" onClick={handleOpen}>
+      <div className="dropup-menu">
+        <Link className="sidebar-option" to="#" onClick={handleOpen}>
           <AiOutlineMenu /> More
-        </a>
+        </Link>
         {isOpen && (
           <div className="menu-item">
-            <a href="#" onClick={onLogout}>
+            <Link to="#" onClick={onLogout}>
               Log out
-            </a>
+            </Link>
           </div>
         )}
       </div>
-      {isDialogOpen && 
-<div className="dialog" onClick={dialogOpen}>
-  <div className="bar">Create new post</div>
-  <div>
-  <div className="content"><FaRegImages /> Drag photos and videos here.</div>
-  <button className="content-btn">Select from computer</button>
-  </div>
-</div>}
+      {isDialogOpen && (
+        <div className="dialog" onClick={dialogOpen}>
+          <div className="bar">Create new post</div>
+          <div>
+            <div className="content">
+              <FaRegImages /> Drag photos and videos here.
+            </div>
+            <button className="content-btn">Select from computer</button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

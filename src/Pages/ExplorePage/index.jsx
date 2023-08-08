@@ -48,7 +48,7 @@ const ExplorePage = () => {
         <div className="explore-img">
           {images.map((img) => (
               <div key={img.id} className='searched-images'>
-              <img src={img.src.potrait} alt={img.photographer} />
+              <img src={img.src.portrait} alt={img.photographer} />
             </div>
           ))}
         </div>
