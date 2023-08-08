@@ -1,29 +1,22 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import Sidebar from '../../Components/Sidebar';
 import './styles.css';
 import { useNavigate } from 'react-router-dom';
 import { getAuth } from 'firebase/auth';
 import app from '../../firebaseConfig';
+import { AuthContext } from '../../Context/AuthContext';
 
 const ProfilePage = () => {
-  const [user, setUser] = useState(null); // Initialize user as null
+  const { currentUser } = useContext(AuthContext);
 
+  console.log('here', currentUser);
   const navigate = useNavigate();
-  const auth = getAuth(app);
-
-  // useEffect(() => {
-  //   // Fetch user data when component mounts
-  //   const currentUser = auth.currentUser;
-  //   if (currentUser) {
-  //     setUser(currentUser);
-  //   }
-  // }, []);
 
   const handleClick = () => {
     navigate('/edit-profile');
   };
 
-  return user ? (
+  return (
     <div className="profile-section">
       <div>
         <Sidebar />
@@ -39,7 +32,7 @@ const ProfilePage = () => {
           </div>
           <div className="profile-details">
             <div className="profile-username">
-              <h4 className="profile-username-name">{user.username}</h4>
+              <h4 className="profile-username-name">{currentUser?.displayName}</h4>
               <button className="profile-username-btn" onClick={handleClick}>
                 Edit profile
               </button>
@@ -48,7 +41,7 @@ const ProfilePage = () => {
               <p className="follower">500 followers</p>
               <p className="following">100 following</p>
             </div>
-            <p className="name">{user.name}</p>
+            <p className="name">{currentUser?.name}</p>
           </div>
         </div>
         <div className="profile-images">
@@ -100,7 +93,7 @@ const ProfilePage = () => {
         </div>
       </div>
     </div>
-  ) : null;
+  );
 };
 
 export default ProfilePage;

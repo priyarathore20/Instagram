@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import './styles.css';
 import Logo from '../../Components/Logo';
 import Input from '../../Components/Input';
@@ -11,7 +11,8 @@ import {
   signInWithPopup,
 } from 'firebase/auth';
 import app from '../../firebaseConfig';
-import { useNavigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
+import { AuthContext } from '../../Context/AuthContext';
 
 const LoginPage = () => {
   const auth = getAuth(app);
@@ -19,6 +20,7 @@ const LoginPage = () => {
   const [password, setPassword] = useState('password');
   const navigate = useNavigate();
   const googleProvider = new GoogleAuthProvider();
+  const { currentUser } = useContext(AuthContext);
 
   const handleClick = async (e) => {
     e.preventDefault();
@@ -29,15 +31,19 @@ const LoginPage = () => {
       console.log(error);
     }
   };
-  const signinWithGoogle = async(e) => {
+  const signinWithGoogle = async (e) => {
     e.preventDefault();
     try {
-     await signInWithPopup(auth, googleProvider);
+      await signInWithPopup(auth, googleProvider);
       navigate('/home');
     } catch (error) {
       console.log(error);
     }
   };
+
+  if (currentUser != null) {
+    return <Navigate to="/home" replace />;
+  }
 
   return (
     <>
@@ -66,14 +72,14 @@ const LoginPage = () => {
               <button className="login-btn">Log in</button>
             </form>
             <p>OR</p>
-            <button className="other-method" onClick={(signinWithGoogle)}>
+            <button className="other-method" onClick={signinWithGoogle}>
               <FaGoogle />
               <p>Log in with Google</p>
             </button>
             <div>
-            <a href="#" className="to-signup">
-              Forgotten your password?
-            </a>
+              <a href="#" className="to-signup">
+                Forgotten your password?
+              </a>
             </div>
           </div>
           <div className="new-account">

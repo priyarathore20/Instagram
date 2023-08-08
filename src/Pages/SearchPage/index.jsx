@@ -5,7 +5,7 @@ import { getFirestore, collection, where, getDocs } from 'firebase/firestore';
 
 const SearchPage = () => {
   const [query, setQuery] = useState('');
-  const [fetchedUsers, setFetchedUsers] = useState('');
+  const [fetchedUsers, setFetchedUsers] = useState([]);
   const db = getFirestore();
 
   const searchUsers = async (e) => {

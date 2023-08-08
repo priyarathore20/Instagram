@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import './styles.css';
 import Logo from '../../Components/Logo';
 import Input from '../../Components/Input';
@@ -10,7 +10,7 @@ import {
   signInWithPopup,
   GoogleAuthProvider,
 } from 'firebase/auth';
-import {  useNavigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 import {
   collection,
   doc,
@@ -30,6 +30,7 @@ import {
   DialogTitle,
   TextField,
 } from '@mui/material';
+import { AuthContext } from '../../Context/AuthContext';
 
 const Signup = () => {
   const [email, setEmail] = useState('abc@gmail.com');
@@ -43,6 +44,7 @@ const Signup = () => {
   const navigate = useNavigate();
   const googleProvider = new GoogleAuthProvider();
   const db = getFirestore(app);
+  const { currentUser } = useContext(AuthContext);
 
   const handleOpen = () => {
     setOpen(true);
@@ -56,12 +58,12 @@ const Signup = () => {
       const q = query(collectionRef, where('username', '==', username));
       // Execute the query and get the result
       const querySnapshot = await getDocs(q);
-       return !querySnapshot.empty   
+      return !querySnapshot.empty;
     } catch (error) {
-     console.log(error) 
-     return true;
+      console.log(error);
+      return true;
     }
-     };
+  };
 
   const handleSave = async () => {
     try {
@@ -110,13 +112,12 @@ const Signup = () => {
       const data = await signInWithPopup(auth, googleProvider);
       setGoogleLoginData(data);
       handleOpen();
-      console.log(localStorage.setItem('user', JSON.stringify(data)))
+      console.log(localStorage.setItem('user', JSON.stringify(data)));
       console.log(data);
     } catch (error) {
       console.log(error);
     }
   };
-
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -149,6 +150,10 @@ const Signup = () => {
       console.log(error);
     }
   };
+
+  if (currentUser != null) {
+    return <Navigate to="/home" replace />;
+  }
 
   return (
     <>
