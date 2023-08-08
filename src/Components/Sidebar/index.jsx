@@ -47,7 +47,7 @@ const Sidebar = () => {
         <a className="sidebar-option" href="/home">
           <AiFillHome /> Home
         </a>
-        <a className="sidebar-option" href="/explore">
+        <a className="sidebar-option" href="/search">
           <AiOutlineSearch /> Search
         </a>
         <a className="sidebar-option" href="/explore">
