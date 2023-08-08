@@ -25,14 +25,14 @@ const ProfilePage = () => {
         <div className="profile-edit">
           <div>
             <img
-              src="https://funylife.in/wp-content/uploads/2023/04/58_Cute-Girl-Pic-WWW.FUNYLIFE.IN_-1-1024x1024.jpg"
+              src= {currentUser?.avatarURL}
               className="avatar-img-1"
               alt="User Avatar"
             />
           </div>
           <div className="profile-details">
             <div className="profile-username">
-              <h4 className="profile-username-name">{currentUser?.displayName}</h4>
+              <h4 className="profile-username-name">{currentUser?.username}</h4>
               <button className="profile-username-btn" onClick={handleClick}>
                 Edit profile
               </button>
