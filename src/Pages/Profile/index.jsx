@@ -11,13 +11,13 @@ const ProfilePage = () => {
   const navigate = useNavigate();
   const auth = getAuth(app);
 
-  useEffect(() => {
-    // Fetch user data when component mounts
-    const currentUser = auth.currentUser;
-    if (currentUser) {
-      setUser(currentUser);
-    }
-  }, []);
+  // useEffect(() => {
+  //   // Fetch user data when component mounts
+  //   const currentUser = auth.currentUser;
+  //   if (currentUser) {
+  //     setUser(currentUser);
+  //   }
+  // }, []);
 
   const handleClick = () => {
     navigate('/edit-profile');
