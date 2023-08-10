@@ -16,6 +16,15 @@ const ProfilePage = () => {
     navigate('/edit-profile');
   };
 
+  const avatar = () => {
+    if (currentUser.avatarURL !== ''){
+      return currentUser?.avatarURL
+    }
+    else {
+      return 'image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIIAAACCCAMAAAC93eDPAAAAYFBMVEUiLTqzusC2vcO6wcccKDYfKjgTITAWIzIZJjSss7kRHy8AFyhbY2wLHCyZoKcrNUFMVF6iqrCCiZEAEiY2P0uTmqE9RlFnb3h2fYVsdHwwOkZTW2RHT1l8g4thaXKJkJhg8Gt6AAAD+0lEQVR4nO2a23aqMBCGIecghINCAWl9/7fcgWqrVkOGZnCvvfkvXN7xrT+TmSQzUbRp06ZNmzZt2rTpXxdnIttlYvph/AXfF6wvuqo2VnXVFT0T61KwLG+NppSSSfaPNl2UsPUA9kdjvx7fyHLUxX4dJ7gYSnL3/TMFMY1YgYCx9/ghwAQRtwrdCJWX9BnAKGo4ckSI4fEaXBtxkKgEx+eL8MWgC0QGNehZgpGhQVsLHvkQjAxoMZkZLwLLUGc4BOLNuReuRVOUcOC99iWIY91jLEVWeZtgbagQloI3/gCjEGxI3j1j8VOkDV8t9oBIGBH0PjQBKwCRMIoGz08Stg7jSoTel8w3LX0hGBUYIYKFgpUODMB7YCjYYAi8LdURjlCEjUfpXx++EN7CxqPo4Ahd2OSULEBok6AIS1wInKKXxELghViyIz7ChiNv4AhD2E3Jc2B+Dp+a/oIEHan65WVKtsBgQCjWA/TIEjgaI/DBLY53oQns8RVkA0E4xbMB5AEJXKoned8oJwKDcasE5WiaBj85juL+NhCD88Kg/K8StEAxwW4K3wyJ9r4Q8Wj+pWkiiPGepGXqh4DzwPGpzCc/0SrsofFO8jTLQGvUd0dbKuoZBmqC3+rvxJWbgdb43RHOXGtBT6v0Z7L0vhdxEaEpVkK4k+zrRxCE1j1yJH6LqeOPrgghZcrW6wxZI2Q69obI5fOUmlSuZsFZahelldGaEK1NlfIdUmFyiiupotxq/POCPuU3yCs/vmnTtfik13x5HBxIeJT3VnZbJtMAwVosXAmRN0VXmbLUZ5Wlqbqi6ZnATxBMJvmxNZrQ7/R8SdE0HtNknkjESsGT/dAa8mNu4IaElO2wT3C8kKJpbUWYbxjbqvE+INQsGaUm9r9NxSaNAj9Bq658bv9DL2jZsXCHeSFbfwOurWhlmAdYpj78uuUPrNBvPMAxQjRmPgSfO2GG3xrBsxYWAz+MoO3vZo3EwSwIgjsjyuYXYSlSv9v8jBFxungxFvRBHmtxg2YHmRaYYTgtuWVx0CPfnIiBlw337RUuWoNPE0m4VTgznIAxuYO9OHsxVKCHcfERnGBs3wJ8YIfwAFYEMFWhQm6GK4TSGwE0PgSR96gRK3AArMjRr3bvS5RlmBBKr10hMXbDRX5DDWrpGclL2iMiF/ToIfKyAS8SRpFyfhngUwIwzXetdtDeNFTEzGwKjpOab3RwV231hmyCtWEmIHc41eEGYWYlMnQCG5DOQgGealyE4Gxni3YFF9wzqRJ7S04ItSszcNzUeJZ70AY8t7NI+fPMwPs1TLBnyOcIrFkFwbUlwGM7CxEcxzf0MnlGcBRLla6D4JgBXAvBUaj+W4Q/eLY3FVG6AH0AAAAASUVORK5CYII='
+    }
+  }
+
   return (
     <div className="profile-section">
       <div>
@@ -25,7 +34,7 @@ const ProfilePage = () => {
         <div className="profile-edit">
           <div>
             <img
-              src= {currentUser?.avatarURL}
+              src= {`https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png?20150327203541 ${(currentUser?.avatarURL !== '') ? currentUser?.avatarURL : ""  }`}
               className="avatar-img-1"
               alt="User Avatar"
             />
