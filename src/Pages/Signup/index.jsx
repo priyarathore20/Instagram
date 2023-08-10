@@ -81,6 +81,7 @@ const Signup = () => {
             gender: '',
             avatarURL: googleLoginData.user.photoURL,
             bio: '',
+            uid: googleLoginData.user.uid
           };
           await addDataWithCustomID(documentID, dataToAdd);
           navigate('/home');
@@ -141,6 +142,7 @@ const Signup = () => {
             gender: '',
             avatarURL: '',
             bio: '',
+            uid: data.user.uid
           };
           await addDataWithCustomID(documentID, dataToAdd);
           navigate('/home');
