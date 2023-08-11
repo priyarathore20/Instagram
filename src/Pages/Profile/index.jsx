@@ -53,6 +53,9 @@ const ProfilePage = () => {
             <p className="name">{currentUser?.name}</p>
           </div>
         </div>
+        <div className="bio">
+          <p className="user-bio">{currentUser?.bio}</p>
+        </div>
         <div className="profile-images">
           <img
             className="profile-img"

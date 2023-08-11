@@ -4,7 +4,7 @@ import Input from '../../Components/Input';
 import Logo from '../../Components/Logo';
 import { doc, getFirestore, updateDoc } from 'firebase/firestore';
 import app from '../../firebaseConfig';
-// import { getDownloadURL, getStorage, ref, uploadBytes } from 'firebase/storage';
+import { getDownloadURL, getStorage, ref, uploadBytes } from 'firebase/storage';
 import { getAuth } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
 
@@ -12,38 +12,49 @@ const EditPage = () => {
   const [username, setUsername] = useState('');
   const [fullName, setFullName] = useState('');
   const [bio, setBio] = useState('');
-  // const [image, setImage] = useState(null);
+  const [image, setImage] = useState(null);
   const [email, setEmail] = useState('');
   const [gender, setGender] = useState('');
   const db = getFirestore(app);
-  const navigate = useNavigate()
-  // const storage = getStorage(app);
+  const navigate = useNavigate();
+  const storage = getStorage(app);
   const auth = getAuth(app);
 
   const updateUserInfo = async (uid, dataToUpdate) => {
     try {
-      await updateDoc(doc(db, "Profiles", uid), dataToUpdate)
+      await updateDoc(doc(db, 'Profiles', uid), dataToUpdate);
+      navigate('/profile');
       console.log('Updated');
     } catch (error) {
       console.error(error);
     }
   };
 
-  const handleImageChange = (e) => {};
+  const handleImageChange = (e) => {
+    setImage(e.target?.files[0]);
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const userIdToUpdate = auth.currentUser?.uid;
+    let avatarURL = '';
+    let userUid = auth?.currentUser?.uid;
+    const avatarRef = ref(
+      storage,
+      `avatar/${userUid}.${image.name.split('.').pop()}`
+    );
+    const snapshot = await uploadBytes(avatarRef, image);
+    avatarURL = snapshot?.metadata?.fullPath;
+
+    const userIdToUpdate = userUid;
     const dataToUpdate = {
       name: fullName,
       username: username,
       email: email,
       bio: bio,
       gender: gender,
-      avatarURL: '',
+      avatarURL: avatarURL,
     };
-    navigate ('/profile')
-  updateUserInfo(userIdToUpdate, dataToUpdate);
+    updateUserInfo(userIdToUpdate, dataToUpdate);
   };
 
   return (

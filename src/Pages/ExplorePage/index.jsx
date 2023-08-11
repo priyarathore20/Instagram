@@ -6,7 +6,7 @@ import axios from 'axios';
 
 const ExplorePage = () => {
   const [images, setImages] = useState([]);
-  const [query, setQuery] = useState();
+  const [query, setQuery] = useState('nature');
 
   const fetchImages = async (e) => {
     e.preventDefault();

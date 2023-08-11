@@ -26,11 +26,11 @@
   gap: 15px;
   letter-spacing: 0.2px;
 }
-.dropup-menu{
+.dropup-menu {
   display: inline-block;
   position: relative;
 }
-.menu-item{
+.menu-item {
   position: absolute;
   background-color: #f0f0f0;
   border: 1px solid #ccc;
@@ -40,12 +40,12 @@
   padding: 8px;
   text-align: center;
 }
-.menu-item a{
+.menu-item a {
   display: block;
   color: black;
   font-weight: bold;
   padding: 8px 0;
 }
-.menu-item a:hover{
-background-color: #ddd; 
+.menu-item a:hover {
+  background-color: #ddd;
 }
