@@ -49,3 +49,11 @@
 .menu-item a:hover {
   background-color: #ddd;
 }
+.dialog{
+  height: 700px;
+  width: 500px;
+  background-color: #ccc;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

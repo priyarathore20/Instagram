@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import './styles.css';
 import Logo from '../Logo';
 import {
@@ -16,11 +16,19 @@ import { RxAvatar } from 'react-icons/rx';
 import app from '../../firebaseConfig';
 import { getAuth } from 'firebase/auth';
 import { Link } from 'react-router-dom';
+import { AuthContext } from '../../Context/AuthContext';
+import { doc, getFirestore, setDoc } from 'firebase/firestore';
+import { getStorage, ref, uploadBytes } from 'firebase/storage';
+import Input from '../Input';
 
 const Sidebar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [image, setImage] = useState(null);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const auth = getAuth(app);
+  const {currentUser} = useContext(AuthContext)
+  const db = getFirestore(app)
+  const storage = getStorage(app) 
 
   const handleOpen = () => {
     setIsOpen(true);
@@ -37,6 +45,42 @@ const Sidebar = () => {
       console.log(error);
     }
   };
+
+  const handleImageChange = (e) => {
+    setImage(e.target?.files[0]);
+  };
+
+  const addDataWithCustomID = async (documentID, dataToAdd) => {
+    const docRef = doc(db, 'Posts', documentID);
+    setDoc(docRef, dataToAdd)
+      .then(() => {
+        console.log(
+          'Data added successfully with custom document ID:',
+          documentID
+        );
+      })
+      .catch((error) => {
+        console.error('Error adding data:', error);
+      });
+  };
+
+const handleSubmit = async(e) => {
+  e.preventDefault();
+  let postURL = '';
+  const avatarRef = ref(
+    storage,
+    `avatar/${currentUser}.${image.name.split('.').pop()}`
+  );
+  const snapshot = await uploadBytes(avatarRef, image);
+  postURL = snapshot?.metadata?.fullPath;
+
+  const documentID = currentUser?.uid
+  const dataToAdd = {
+    postURL: null,
+
+  };
+  await addDataWithCustomID(documentID, dataToAdd);
+}
 
   return (
     <div className="sidebar">
@@ -88,7 +132,9 @@ const Sidebar = () => {
             <div className="content">
               <FaRegImages /> Drag photos and videos here.
             </div>
-            <button className="content-btn">Select from computer</button>
+            <input type='file' className="content-btn" onClick={handleImageChange} accept='images/*' placeholder='Select from computer' />
+          
+          <button onClick={handleSubmit}>Create</button>
           </div>
         </div>
       )}

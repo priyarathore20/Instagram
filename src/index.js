@@ -3,14 +3,17 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import {SnackbarProvider} from 'notistack'
 import AuthContextProvider from './Context/AuthContext';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
+    <SnackbarProvider maxSnack={3} transitionDuration={3000}>
     <AuthContextProvider>
       <App />
     </AuthContextProvider>
+    </SnackbarProvider>
   </React.StrictMode>
 );
 

@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import './styles.css';
 import Avatar from '../Avatar';
 import { AiOutlineHeart } from 'react-icons/ai';
+import app from '../../firebaseConfig';
 
 const Posts = () => {
+
   return (
     <div className='posts'>
       <div className="post-card">

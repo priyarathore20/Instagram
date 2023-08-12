@@ -1,30 +1,35 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import './styles.css';
 import Input from '../../Components/Input';
 import Logo from '../../Components/Logo';
-import { doc, getFirestore, updateDoc } from 'firebase/firestore';
+import { doc, getFirestore, setDoc, updateDoc } from 'firebase/firestore';
 import app from '../../firebaseConfig';
-import { getDownloadURL, getStorage, ref, uploadBytes } from 'firebase/storage';
-import { getAuth } from 'firebase/auth';
+import { getStorage, ref, uploadBytes } from 'firebase/storage';
 import { useNavigate } from 'react-router-dom';
+import { AuthContext } from '../../Context/AuthContext';
+import { enqueueSnackbar, useSnackbar } from 'notistack';
 
 const EditPage = () => {
-  const [username, setUsername] = useState('');
-  const [fullName, setFullName] = useState('');
-  const [bio, setBio] = useState('');
+  const { currentUser } = useContext(AuthContext);
+  const [username, setUsername] = useState(currentUser?.username);
+  const [fullName, setFullName] = useState(currentUser?.name);
+  const [bio, setBio] = useState(currentUser?.bio);
   const [image, setImage] = useState(null);
-  const [email, setEmail] = useState('');
-  const [gender, setGender] = useState('');
+  const [email, setEmail] = useState(currentUser?.email);
+  const [gender, setGender] = useState(currentUser?.gender);
   const db = getFirestore(app);
   const navigate = useNavigate();
   const storage = getStorage(app);
-  const auth = getAuth(app);
+  const { enqueueSnackbar } = useSnackbar();
 
   const updateUserInfo = async (uid, dataToUpdate) => {
     try {
-      await updateDoc(doc(db, 'Profiles', uid), dataToUpdate);
-      navigate('/profile');
+      const userRef = doc(db, 'Profiles', uid);
+      await setDoc(userRef, dataToUpdate);
+      console.log(uid, dataToUpdate);
       console.log('Updated');
+      enqueueSnackbar('Data updated successfully');
+      navigate('/profile');
     } catch (error) {
       console.error(error);
     }
@@ -37,15 +42,14 @@ const EditPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     let avatarURL = '';
-    let userUid = auth?.currentUser?.uid;
     const avatarRef = ref(
       storage,
-      `avatar/${userUid}.${image.name.split('.').pop()}`
+      `avatar/${currentUser}.${image.name.split('.').pop()}`
     );
     const snapshot = await uploadBytes(avatarRef, image);
     avatarURL = snapshot?.metadata?.fullPath;
 
-    const userIdToUpdate = userUid;
+    const userIdToUpdate = currentUser;
     const dataToUpdate = {
       name: fullName,
       username: username,
