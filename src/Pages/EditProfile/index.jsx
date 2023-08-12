@@ -58,9 +58,12 @@ const EditPage = () => {
       gender: gender,
       avatarURL: avatarURL,
     };
+    if (username && email === "") {
+     enqueueSnackbar('Please enter some value') 
+    }
     updateUserInfo(userIdToUpdate, dataToUpdate);
   };
-
+  
   return (
     <div className="edit">
       <div className="app">
@@ -113,7 +116,7 @@ const EditPage = () => {
               onChange={handleImageChange}
             />
             <br />
-            <button type="submit" className="edit-btn">
+            <button type="submit" className="edit-btn" disabled={image}>
               Save
             </button>
           </div>
