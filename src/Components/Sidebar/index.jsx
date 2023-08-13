@@ -11,7 +11,6 @@ import { MdOutlineExplore } from 'react-icons/md';
 import { TfiVideoClapper } from 'react-icons/tfi';
 import { RiMessengerLine } from 'react-icons/ri';
 import { FiPlusSquare } from 'react-icons/fi';
-import { FaRegImages } from 'react-icons/fa';
 import { RxAvatar } from 'react-icons/rx';
 import app from '../../firebaseConfig';
 import { getAuth } from 'firebase/auth';
@@ -19,7 +18,6 @@ import { Link } from 'react-router-dom';
 import { AuthContext } from '../../Context/AuthContext';
 import { doc, getFirestore, setDoc } from 'firebase/firestore';
 import { getStorage, ref, uploadBytes } from 'firebase/storage';
-import Input from '../Input';
 import {
   Button,
   Dialog,
@@ -30,7 +28,6 @@ import {
 } from '@mui/material';
 
 const Sidebar = () => {
-  const [isOpen, setIsOpen] = useState(false);
   const [image, setImage] = useState(null);
   const auth = getAuth(app);
   const { currentUser } = useContext(AuthContext);
@@ -65,6 +62,7 @@ const Sidebar = () => {
     try {
       const docRef = doc(db, 'Posts', documentID);
       await setDoc(docRef, dataToAdd);
+      console.log("Post created")
     } catch (error) {
       console.log(error);
     }
@@ -73,17 +71,18 @@ const Sidebar = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     let postURL = '';
-    const avatarRef = ref(
+    const postRef = ref(
       storage,
-      `avatar/${currentUser}.${image.name.split('.').pop()}`
+      `posts/${currentUser?.uid}.${image.name.split('.').pop()}`
     );
-    const snapshot = await uploadBytes(avatarRef, image);
+    const snapshot = await uploadBytes(postRef, image);
     postURL = snapshot?.metadata?.fullPath;
 
     const documentID = currentUser?.uid;
     const dataToAdd = {
       post: postURL,
-      caption: caption
+      caption: caption,
+      likes: new Date()
     };
     await addDataWithCustomID(documentID, dataToAdd);
   };
@@ -123,13 +122,13 @@ const Sidebar = () => {
         <Link className="sidebar-option" to="#" >
           <AiOutlineMenu /> More
         </Link>
-        {isOpen && (
+        
           <div className="menu-item">
             <Link to="#" onClick={onLogout}>
               Log out
             </Link>
           </div>
-        )}
+        
       </div>
       <div>
         <Dialog open={open} onClose={handleClose}>
