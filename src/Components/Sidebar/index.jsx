@@ -20,24 +20,35 @@ import { AuthContext } from '../../Context/AuthContext';
 import { doc, getFirestore, setDoc } from 'firebase/firestore';
 import { getStorage, ref, uploadBytes } from 'firebase/storage';
 import Input from '../Input';
+import {
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  TextField,
+} from '@mui/material';
 
 const Sidebar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [image, setImage] = useState(null);
-  const [isDialogOpen, setIsDialogOpen] = useState(false);
   const auth = getAuth(app);
   const { currentUser } = useContext(AuthContext);
   const db = getFirestore(app);
   const storage = getStorage(app);
+  const [open, setOpen] = useState(false);
+  const [caption, setCaption] = useState('');
 
-  const handleOpen = () => {
-    setIsOpen(true);
+  const handleClickOpen = () => {
+    setOpen(true);
   };
 
-  const dialogOpen = () => {
-    setIsDialogOpen(true);
+  const handleClose = (e) => {
+    e.preventDefault();
+    handleSubmit(e); 
+    setOpen(false);
   };
-
+  
   const onLogout = async () => {
     try {
       await auth.signOut();
@@ -71,7 +82,8 @@ const Sidebar = () => {
 
     const documentID = currentUser?.uid;
     const dataToAdd = {
-      postURL: null,
+      post: postURL,
+      caption: caption
     };
     await addDataWithCustomID(documentID, dataToAdd);
   };
@@ -100,7 +112,7 @@ const Sidebar = () => {
         <Link className="sidebar-option" to="#">
           <AiOutlineHeart /> Notifications
         </Link>
-        <Link className="sidebar-option" to="#">
+        <Link className="sidebar-option" to="#" onClick={handleClickOpen}>
           <FiPlusSquare /> Create
         </Link>
         <Link className="sidebar-option" to="/profile">
@@ -108,7 +120,7 @@ const Sidebar = () => {
         </Link>
       </div>
       <div className="dropup-menu">
-        <Link className="sidebar-option" to="#" onClick={handleOpen}>
+        <Link className="sidebar-option" to="#" >
           <AiOutlineMenu /> More
         </Link>
         {isOpen && (
@@ -119,25 +131,34 @@ const Sidebar = () => {
           </div>
         )}
       </div>
-      {isDialogOpen && (
-        <div className="dialog" onClick={dialogOpen}>
-          <div className="bar">Create new post</div>
-          <div>
-            <div className="content">
-              <FaRegImages /> Drag photos and videos here.
-            </div>
-            <input
+      <div>
+        <Dialog open={open} onClose={handleClose}>
+          <DialogTitle>Create new post</DialogTitle>
+          <DialogContent>
+            <TextField
+              autoFocus
+              margin="dense"
               type="file"
-              className="content-btn"
-              onClick={handleImageChange}
-              accept="images/*"
-              placeholder="Select from computer"
+              onChange={handleImageChange}
+              accept="image/*"
+              fullWidth
             />
-
-            <button onClick={handleSubmit}>Create</button>
-          </div>
-        </div>
-      )}
+            <TextField
+              autoFocus
+              margin="dense"
+              value={caption}
+              onChange={e => setCaption(e.target.value)}
+              label="Enter caption"
+              type="text"
+              fullWidth
+            />
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleClose}>Cancel</Button>
+            <Button onClick={handleClose}>Create</Button>
+          </DialogActions>
+        </Dialog>
+      </div>
     </div>
   );
 };

@@ -2,12 +2,18 @@ import React, { useContext, useState } from 'react';
 import './styles.css';
 import Input from '../../Components/Input';
 import Logo from '../../Components/Logo';
-import { doc, getFirestore, setDoc, updateDoc } from 'firebase/firestore';
+import {
+  collection,
+  doc,
+  getFirestore,
+  updateDoc,
+} from 'firebase/firestore';
 import app from '../../firebaseConfig';
 import { getStorage, ref, uploadBytes } from 'firebase/storage';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../Context/AuthContext';
-import { enqueueSnackbar, useSnackbar } from 'notistack';
+import { useSnackbar } from 'notistack';
+import { getAuth } from 'firebase/auth';
 
 const EditPage = () => {
   const { currentUser } = useContext(AuthContext);
@@ -17,6 +23,7 @@ const EditPage = () => {
   const [image, setImage] = useState(null);
   const [email, setEmail] = useState(currentUser?.email);
   const [gender, setGender] = useState(currentUser?.gender);
+  const auth = getAuth(app);
   const db = getFirestore(app);
   const navigate = useNavigate();
   const storage = getStorage(app);
@@ -24,14 +31,15 @@ const EditPage = () => {
 
   const updateUserInfo = async (uid, dataToUpdate) => {
     try {
-      const userRef = doc(db, 'Profiles', uid);
-      await setDoc(userRef, dataToUpdate);
+      const profilesCollection = collection(db, 'Profiles');
+      const userRef = doc(profilesCollection, uid);
+      await updateDoc(userRef, dataToUpdate);
       console.log(uid, dataToUpdate);
       console.log('Updated');
-      enqueueSnackbar('Data updated successfully');
+      enqueueSnackbar('Data updated successfully', {variant:'success'});
       navigate('/profile');
     } catch (error) {
-      console.error(error);
+      enqueueSnackbar(error, {variant:'error'});
     }
   };
 
@@ -49,7 +57,7 @@ const EditPage = () => {
     const snapshot = await uploadBytes(avatarRef, image);
     avatarURL = snapshot?.metadata?.fullPath;
 
-    const userIdToUpdate = currentUser;
+    const userRef = auth?.currentUser?.uid;
     const dataToUpdate = {
       name: fullName,
       username: username,
@@ -58,12 +66,12 @@ const EditPage = () => {
       gender: gender,
       avatarURL: avatarURL,
     };
-    if (username && email === "") {
-     enqueueSnackbar('Please enter some value') 
+    if (username && email === '') {
+   enqueueSnackbar('Please enter some value', {variant:'error'});
     }
-    updateUserInfo(userIdToUpdate, dataToUpdate);
+    updateUserInfo(userRef, dataToUpdate);
   };
-  
+
   return (
     <div className="edit">
       <div className="app">
@@ -116,7 +124,7 @@ const EditPage = () => {
               onChange={handleImageChange}
             />
             <br />
-            <button type="submit" className="edit-btn" disabled={image}>
+            <button type="submit" className="edit-btn">
               Save
             </button>
           </div>
