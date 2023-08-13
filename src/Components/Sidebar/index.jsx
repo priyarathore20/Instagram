@@ -26,9 +26,9 @@ const Sidebar = () => {
   const [image, setImage] = useState(null);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const auth = getAuth(app);
-  const {currentUser} = useContext(AuthContext)
-  const db = getFirestore(app)
-  const storage = getStorage(app) 
+  const { currentUser } = useContext(AuthContext);
+  const db = getFirestore(app);
+  const storage = getStorage(app);
 
   const handleOpen = () => {
     setIsOpen(true);
@@ -51,36 +51,30 @@ const Sidebar = () => {
   };
 
   const addDataWithCustomID = async (documentID, dataToAdd) => {
-    const docRef = doc(db, 'Posts', documentID);
-    setDoc(docRef, dataToAdd)
-      .then(() => {
-        console.log(
-          'Data added successfully with custom document ID:',
-          documentID
-        );
-      })
-      .catch((error) => {
-        console.error('Error adding data:', error);
-      });
+    try {
+      const docRef = doc(db, 'Posts', documentID);
+      await setDoc(docRef, dataToAdd);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
-const handleSubmit = async(e) => {
-  e.preventDefault();
-  let postURL = '';
-  const avatarRef = ref(
-    storage,
-    `avatar/${currentUser}.${image.name.split('.').pop()}`
-  );
-  const snapshot = await uploadBytes(avatarRef, image);
-  postURL = snapshot?.metadata?.fullPath;
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    let postURL = '';
+    const avatarRef = ref(
+      storage,
+      `avatar/${currentUser}.${image.name.split('.').pop()}`
+    );
+    const snapshot = await uploadBytes(avatarRef, image);
+    postURL = snapshot?.metadata?.fullPath;
 
-  const documentID = currentUser?.uid
-  const dataToAdd = {
-    postURL: null,
-
+    const documentID = currentUser?.uid;
+    const dataToAdd = {
+      postURL: null,
+    };
+    await addDataWithCustomID(documentID, dataToAdd);
   };
-  await addDataWithCustomID(documentID, dataToAdd);
-}
 
   return (
     <div className="sidebar">
@@ -132,9 +126,15 @@ const handleSubmit = async(e) => {
             <div className="content">
               <FaRegImages /> Drag photos and videos here.
             </div>
-            <input type='file' className="content-btn" onClick={handleImageChange} accept='images/*' placeholder='Select from computer' />
-          
-          <button onClick={handleSubmit}>Create</button>
+            <input
+              type="file"
+              className="content-btn"
+              onClick={handleImageChange}
+              accept="images/*"
+              placeholder="Select from computer"
+            />
+
+            <button onClick={handleSubmit}>Create</button>
           </div>
         </div>
       )}
