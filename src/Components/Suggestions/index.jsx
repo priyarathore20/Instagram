@@ -1,15 +1,18 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import Link from '../Link'
 import "./styles.css"
+import { AuthContext } from '../../Context/AuthContext'
 
 const Suggestions = () => {
+const {currentUser} = useContext(AuthContext)
+
   return (
     <div className='suggest'>
       <div className='suggested'>
-        <img src='https://funylife.in/wp-content/uploads/2023/04/58_Cute-Girl-Pic-WWW.FUNYLIFE.IN_-1-1024x1024.jpg' className='avatar-img' />
+        <img src={currentUser?.avatarURL} className='avatar-img' />
         <div >
-          <p className="username">Zayra.02_</p>
-          <p className="full-name">Zayra Sheikh</p>
+          <p className="username">{currentUser?.username}</p>
+          <p className="full-name">{currentUser?.name}</p>
         </div>
       </div>
       <p className='suggesteds'>Suggested for you </p>

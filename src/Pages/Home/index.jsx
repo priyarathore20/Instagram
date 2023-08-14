@@ -29,7 +29,6 @@ const Homepage = () => {
         enqueueSnackbar(error, { variant: 'error' });
         return [];
       } finally {
-        setLoading(false);
       }
     };
     fetchPosts();
