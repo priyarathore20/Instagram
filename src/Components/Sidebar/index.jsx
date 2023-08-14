@@ -44,15 +44,8 @@ const Sidebar = () => {
     setOpen(true);
   };
 
-  const handleClickClose = () => {
+  const handleClose = () => {
     setOpen(false);
-  };
-
-  const handleClose = (e) => {
-    e.preventDefault();
-    handleSubmit(e);
-    setOpen(false);
-    setLoading(true);
   };
 
   const onLogout = async () => {
@@ -67,9 +60,9 @@ const Sidebar = () => {
     setImage(e.target?.files[0]);
   };
 
-  const addDataWithCustomID = async (documentID, dataToAdd) => {
+  const addDataWithCustomID = async (dataToAdd) => {
     try {
-      const docRef = doc(db, 'Posts', documentID);
+      const docRef = doc(db, 'Posts');
       await setDoc(docRef, dataToAdd);
       console.log('Post created');
       enqueueSnackbar('Post created', { variant: 'success' });
@@ -99,13 +92,18 @@ const Sidebar = () => {
     const snapshot = await uploadBytes(postRef, image);
     postURL = snapshot?.metadata?.fullPath;
 
-    const documentID = currentUser?.uid;
+    // const documentID = currentUser?.uid;
     const dataToAdd = {
-      post: postURL,
+      postImageUrl: postURL,
       caption: caption,
-      likes: new Date(),
+      likes: 0,
+      createdAt: new Date(),
+      createdBy: currentUser?.uid,
     };
-    await addDataWithCustomID(documentID, dataToAdd);
+    await addDataWithCustomID(dataToAdd);
+
+    setOpen(false);
+    setLoading(false);
   };
 
   return (
@@ -172,8 +170,8 @@ const Sidebar = () => {
             />
           </DialogContent>
           <DialogActions>
-            <Button onClick={handleClickClose}>Cancel</Button>
-            <Button onClick={handleClose}>Create</Button>
+            <Button onClick={handleClose}>Cancel</Button>
+            <Button onClick={handleSubmit}>Create</Button>
           </DialogActions>
         </Dialog>
       </div>

@@ -81,10 +81,10 @@ const Signup = () => {
             gender: '',
             avatarURL: googleLoginData.user.photoURL,
             bio: '',
-            uid: googleLoginData.user.uid
+            uid: googleLoginData.user.uid,
           };
           await addDataWithCustomID(documentID, dataToAdd);
-          navigate('/home');
+
           setOpen(false);
         }
       }
@@ -101,6 +101,8 @@ const Signup = () => {
           'Data added successfully with custom document ID:',
           documentID
         );
+
+        navigate('/home');
       })
       .catch((error) => {
         console.error('Error adding data:', error);
@@ -142,7 +144,7 @@ const Signup = () => {
             gender: '',
             avatarURL: '',
             bio: '',
-            uid: data.user.uid
+            uid: data.user.uid,
           };
           await addDataWithCustomID(documentID, dataToAdd);
           navigate('/home');
@@ -170,7 +172,7 @@ const Signup = () => {
           </p>
           <button className="signup-btn" onClick={loginWithGoogle}>
             <FaGoogle />
-            <span>Log in With Google</span>
+            <span>Signup in With Google</span>
           </button>
           <p className="or">OR</p>
           <form className="form" onSubmit={handleSubmit}>

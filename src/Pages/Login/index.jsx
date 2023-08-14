@@ -13,29 +13,65 @@ import {
 import app from '../../firebaseConfig';
 import { Navigate, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../Context/AuthContext';
+import {
+  collection,
+  getDocs,
+  getFirestore,
+  query,
+  where,
+} from 'firebase/firestore';
+import { useSnackbar } from 'notistack';
 
 const LoginPage = () => {
   const auth = getAuth(app);
+  const db = getFirestore(app);
+
   const [email, setEmail] = useState('abc@gmail.com');
   const [password, setPassword] = useState('password');
   const navigate = useNavigate();
   const googleProvider = new GoogleAuthProvider();
   const { currentUser } = useContext(AuthContext);
+  const { enqueueSnackbar } = useSnackbar();
 
   const handleClick = async (e) => {
     e.preventDefault();
     try {
       await signInWithEmailAndPassword(auth, email, password);
+
       navigate('/home');
     } catch (error) {
       console.log(error);
     }
   };
+
+  const checkIfUidExists = async (uid) => {
+    try {
+      const collectionRef = collection(db, 'Profiles');
+      const q = query(collectionRef, where('uid', '==', uid));
+      // Execute the query and get the result
+      const querySnapshot = await getDocs(q);
+      return !querySnapshot.empty;
+    } catch (error) {
+      console.log(error);
+      return false;
+    }
+  };
+
   const signinWithGoogle = async (e) => {
     e.preventDefault();
     try {
-      await signInWithPopup(auth, googleProvider);
-      navigate('/home');
+      const data = await signInWithPopup(auth, googleProvider);
+
+      const isUserExist = await checkIfUidExists(data?.user?.uid);
+
+      console.log(isUserExist);
+      if (isUserExist) {
+        navigate('/home');
+      } else {
+        enqueueSnackbar("User doesn't exist. Please signup", {
+          variant: 'error',
+        });
+      }
     } catch (error) {
       console.log(error);
     }
