@@ -46,6 +46,9 @@
 
 .post-caption {
   margin-top: 12px;
+  display: flex;
+  flex-direction: row;
+  gap: 5px;
 }
 
 .likes {
@@ -56,4 +59,7 @@
 .timestamp {
   margin-top: 8px;
   color: #8e8e8e;
+}
+.username-2{
+font-weight: bold;
 }
