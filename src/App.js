@@ -6,12 +6,14 @@ import { getAuth } from 'firebase/auth';
 import { AuthContext } from './Context/AuthContext';
 import app from './firebaseConfig';
 import { doc, getDoc, getFirestore } from 'firebase/firestore';
+import { useSnackbar } from 'notistack';
 
 const App = () => {
   const auth = getAuth(app);
   const { updateUser, currentUser } = useContext(AuthContext);
   const [loading, setLoading] = useState(true);
   const db = getFirestore();
+  const {enqueueSnackbar} = useSnackbar()
 
   useEffect(() => {
     auth.onAuthStateChanged(async (user) => {
@@ -28,6 +30,7 @@ const App = () => {
           }
         } catch (error) {
           console.error('Error fetching document:', error);
+          enqueueSnackbar(error, {variant: 'error'})
         } 
         finally {
           setLoading(false);

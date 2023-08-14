@@ -26,6 +26,7 @@ import {
   DialogTitle,
   TextField,
 } from '@mui/material';
+import { useSnackbar } from 'notistack';
 
 const Sidebar = () => {
   const [image, setImage] = useState(null);
@@ -37,22 +38,23 @@ const Sidebar = () => {
   const [caption, setCaption] = useState('');
   const [loading, setLoading] = useState(false);
   const [isDialogOpen, setisDialogOpen] = useState(false);
+  const { enqueueSnackbar } = useSnackbar();
 
   const handleClickOpen = () => {
     setOpen(true);
   };
 
-const handleClickClose = () => {
-  setOpen(false)
-}
+  const handleClickClose = () => {
+    setOpen(false);
+  };
 
   const handleClose = (e) => {
     e.preventDefault();
-    handleSubmit(e); 
+    handleSubmit(e);
     setOpen(false);
-    setLoading(true)
+    setLoading(true);
   };
-  
+
   const onLogout = async () => {
     try {
       await auth.signOut();
@@ -69,9 +71,11 @@ const handleClickClose = () => {
     try {
       const docRef = doc(db, 'Posts', documentID);
       await setDoc(docRef, dataToAdd);
-      console.log("Post created")
+      console.log('Post created');
+      enqueueSnackbar('Post created', { variant: 'success' });
     } catch (error) {
       console.log(error);
+      enqueueSnackbar(error, { variant: 'error' });
     }
   };
 
@@ -99,7 +103,7 @@ const handleClickClose = () => {
     const dataToAdd = {
       post: postURL,
       caption: caption,
-      likes: new Date()
+      likes: new Date(),
     };
     await addDataWithCustomID(documentID, dataToAdd);
   };
@@ -136,16 +140,15 @@ const handleClickClose = () => {
         </Link>
       </div>
       <div className="dropup-menu">
-        <Link className="sidebar-option" to="#" >
+        <Link className="sidebar-option" to="#">
           <AiOutlineMenu /> More
         </Link>
-        
-          <div className="menu-item">
-            <Link to="#" onClick={onLogout}>
-              Log out
-            </Link>
-          </div>
-        
+
+        <div className="menu-item">
+          <Link to="#" onClick={onLogout}>
+            Log out
+          </Link>
+        </div>
       </div>
       <div>
         <Dialog open={open} onClose={handleClose}>
@@ -162,7 +165,7 @@ const handleClickClose = () => {
               autoFocus
               margin="dense"
               value={caption}
-              onChange={e => setCaption(e.target.value)}
+              onChange={(e) => setCaption(e.target.value)}
               label="Enter caption"
               type="text"
               fullWidth

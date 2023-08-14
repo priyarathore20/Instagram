@@ -6,6 +6,7 @@ import { AuthContext } from '../../Context/AuthContext';
 import app from '../../firebaseConfig';
 import { collection, getDocs, getFirestore } from 'firebase/firestore';
 import { getDownloadURL, getStorage, ref } from 'firebase/storage';
+import { useSnackbar } from 'notistack';
 
 const Posts = () => {
   const { currentUser } = useContext(AuthContext);
@@ -13,7 +14,8 @@ const Posts = () => {
   const storage = getStorage(app);
   const [imageData, setImageData] = useState([]);
   const [loading, setLoading] = useState(true);
-  
+  const { enqueueSnackbar } = useSnackbar();
+
   useEffect(() => {
     const fetchPosts = async () => {
       const postRef = collection(db, 'Posts');
@@ -26,6 +28,7 @@ const Posts = () => {
         setImageData(data);
       } catch (error) {
         console.log(error);
+        enqueueSnackbar(error, { variant: 'error' });
         return [];
       } finally {
         setLoading(false);
@@ -51,11 +54,11 @@ const Posts = () => {
           <div key={image.id} className="post-card">
             <div className="post-header">
               <div className="profile-pic">
-                <img src={currentUser?.avatarURL} alt="#" />
+                <img src={"https://instagram-clone-7ecf8.appspot.com" + currentUser?.avatarURL} alt="#" />
               </div>
               <div className="username">{currentUser?.username}</div>
             </div>
-            <div className="post-image">{image?.post}</div>
+            <img className="post-image" src={"https://firebasestorage.googleapis.com/v0/b/instagram-clone-7ecf8.appspot.com" + image?.post} alt="post"/>
             <div className="post-caption">
               <p className="username-2">{currentUser?.username}</p>{' '}
               <p> {image?.caption}</p>
