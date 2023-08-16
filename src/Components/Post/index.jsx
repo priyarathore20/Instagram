@@ -34,23 +34,21 @@ const PostCard = ({
   }, []);
 
   return (
-    <div className="posts">
-      <div className="post-card">
-        <div className="post-header">
-          <div className="profile-pic">
-            <img src={avatarURL} alt="#" />
-          </div>
-          <div className="username">{}</div>
+    <div className="post-card">
+      <div className="post-header">
+        <div className="profile-pic">
+          <img src={avatarURL} alt="#" />
         </div>
-        <img className="post-image" src={imageUrl} alt="post" />
-        <div className="post-caption">
-          <p className="username-2">{username}</p> <p> {caption}</p>
-        </div>
-        <div className="likes">
-          <AiOutlineHeart /> {likes}
-        </div>
-        <div className="timestamp">2 hours ago</div>
+        <div className="username">{username}</div>
       </div>
+      <img className="post-image" src={imageUrl} alt="post" />
+      <div className="post-caption">
+        <p className="username-2">{username}</p> <p> {caption}</p>
+      </div>
+      <div className="likes">
+        <AiOutlineHeart /> {likes}
+      </div>
+      <div className="timestamp">2 hours ago</div>
     </div>
   );
 };

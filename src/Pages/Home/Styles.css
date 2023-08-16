@@ -1,4 +1,21 @@
-.home{
-  display: grid;
- grid-template-columns: auto auto auto;
+.home {
+  display: flex;
+  justify-content: center;
+  margin-left: 244px;
+  height: 100vh;
+  overflow-y: auto;
+}
+
+.home-posts {
+  max-width: 630px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.posts {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  max-width: 470px;
 }

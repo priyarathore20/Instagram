@@ -16,7 +16,13 @@ import app from '../../firebaseConfig';
 import { getAuth } from 'firebase/auth';
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../../Context/AuthContext';
-import { doc, getFirestore, setDoc } from 'firebase/firestore';
+import {
+  addDoc,
+  collection,
+  doc,
+  getFirestore,
+  setDoc,
+} from 'firebase/firestore';
 import { getStorage, ref, uploadBytes } from 'firebase/storage';
 import {
   Button,
@@ -100,7 +106,11 @@ const Sidebar = () => {
       createdAt: new Date(),
       createdBy: currentUser?.uid,
     };
-    await addDataWithCustomID(dataToAdd);
+
+    const addRef = doc(collection(db, 'Posts'));
+    await addDoc(addRef, dataToAdd);
+
+    // await addDataWithCustomID(dataToAdd);
 
     setOpen(false);
     setLoading(false);
@@ -108,8 +118,12 @@ const Sidebar = () => {
 
   return (
     <div className="sidebar">
-      <div>
-        <Logo />
+      <div className="sidebar-logo">
+        <img
+          className="logo"
+          src="https://logos-download.com/wp-content/uploads/2016/03/Instagram_Logo_2016.svg"
+          alt="#"
+        />
       </div>
       <div className="sidebar-options">
         <Link className="sidebar-option" to="/home">
@@ -142,39 +156,38 @@ const Sidebar = () => {
           <AiOutlineMenu /> More
         </Link>
 
-        <div className="menu-item">
+        {/* <div className="menu-item">
           <Link to="#" onClick={onLogout}>
             Log out
           </Link>
-        </div>
+        </div> */}
       </div>
-      <div>
-        <Dialog open={open} onClose={handleClose}>
-          <DialogTitle>Create new post</DialogTitle>
-          <DialogContent>
-            <TextField
-              autoFocus
-              margin="dense"
-              type="file"
-              onChange={handleImageChange}
-              fullWidth
-            />
-            <TextField
-              autoFocus
-              margin="dense"
-              value={caption}
-              onChange={(e) => setCaption(e.target.value)}
-              label="Enter caption"
-              type="text"
-              fullWidth
-            />
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={handleClose}>Cancel</Button>
-            <Button onClick={handleSubmit}>Create</Button>
-          </DialogActions>
-        </Dialog>
-      </div>
+
+      <Dialog open={open} onClose={handleClose}>
+        <DialogTitle>Create new post</DialogTitle>
+        <DialogContent>
+          <TextField
+            autoFocus
+            margin="dense"
+            type="file"
+            onChange={handleImageChange}
+            fullWidth
+          />
+          <TextField
+            autoFocus
+            margin="dense"
+            value={caption}
+            onChange={(e) => setCaption(e.target.value)}
+            label="Enter caption"
+            type="text"
+            fullWidth
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose}>Cancel</Button>
+          <Button onClick={handleSubmit}>Create</Button>
+        </DialogActions>
+      </Dialog>
     </div>
   );
 };

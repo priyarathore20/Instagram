@@ -38,29 +38,30 @@ const Homepage = () => {
     };
     fetchPosts();
   }, [db, storage]);
+  
 
   return (
     <>
       <div className="home">
-        <div>
-          <Sidebar />
+        <Sidebar />
+
+        <div className="home-posts">
+          <div className="posts">
+            {postsData?.map((item, index) => (
+              <PostCard
+                key={index}
+                username={currentUser?.username}
+                avatarURL={currentUser?.avatarURL}
+                postImageUrl={item?.postImageUrl}
+                caption={item?.caption}
+                likes={item?.likes}
+                createdAt={item?.createdAt}
+              />
+            ))}
+          </div>
         </div>
-        <div>
-          {postsData?.map((item, index) => (
-            <PostCard
-              key={index}
-              username={currentUser?.username}
-              avatarURL={currentUser?.avatarURL}
-              postImageUrl={item?.postImageUrl}
-              caption={item?.caption}
-              likes={item?.likes}
-              createdAt={item?.createdAt}
-            />
-          ))}
-        </div>
-        <div>
-          <Suggestions />
-        </div>
+
+        <Suggestions />
       </div>
     </>
   );
