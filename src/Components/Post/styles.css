@@ -2,10 +2,13 @@
   width: 100%;
   height: auto;
   /* margin: 0 auto; */
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  padding: 16px;
+ 
+  /* border-radius: 8px; */
+  /* padding: 16px; */
   background-color: #fff;
+  padding-bottom: 16px;
+   border-bottom: 1px solid #ccc;
+   margin-bottom: 24px;
 }
 
 .post-header {
@@ -28,8 +31,21 @@
   object-fit: contain;
 }
 
+.post-actions {
+  display: flex;
+  gap: 16px;
+  margin: 12px 0;
+}
+
+.post-actions svg {
+  cursor: pointer;
+  height: 24px;
+  width: 24px;
+}
+
 .username {
   font-weight: bold;
+  font-size: 14px;
 }
 
 .post-image {
@@ -58,6 +74,8 @@
 }
 
 .timestamp {
+  font-size: 14px;
+  font-weight: 400;
   margin-top: 8px;
   color: #8e8e8e;
 }

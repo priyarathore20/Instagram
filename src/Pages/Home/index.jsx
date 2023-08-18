@@ -3,7 +3,13 @@ import './Styles.css';
 import Sidebar from '../../Components/Sidebar';
 import Posts from '../../Components/Post';
 import Suggestions from '../../Components/Suggestions';
-import { collection, getDocs, getFirestore } from 'firebase/firestore';
+import {
+  collection,
+  getDocs,
+  getFirestore,
+  orderBy,
+  query,
+} from 'firebase/firestore';
 import { getStorage } from 'firebase/storage';
 import app from '../../firebaseConfig';
 import { useSnackbar } from 'notistack';
@@ -18,44 +24,46 @@ const Homepage = () => {
   const [postsData, setPostsData] = useState([]);
   const { enqueueSnackbar } = useSnackbar();
 
+  const fetchPosts = async () => {
+    const postRef = collection(db, 'Posts');
+    try {
+      const q = query(postRef, orderBy('createdAt', 'desc'));
+      const res = await getDocs(q);
+      const data = [];
+      res.forEach((doc) => {
+        data.push({ id: doc?.id, ...doc.data() });
+      });
+      setPostsData(data);
+    } catch (error) {
+      console.log(error);
+      enqueueSnackbar(error, { variant: 'error' });
+      return [];
+    } finally {
+    }
+  };
+
   useEffect(() => {
-    const fetchPosts = async () => {
-      const postRef = collection(db, 'Posts');
-      try {
-        const query = await getDocs(postRef);
-        const data = [];
-        query.forEach((doc) => {
-          data.push(doc.data());
-        });
-        console.log(data);
-        setPostsData(data);
-      } catch (error) {
-        console.log(error);
-        enqueueSnackbar(error, { variant: 'error' });
-        return [];
-      } finally {
-      }
-    };
     fetchPosts();
   }, [db, storage]);
-  
 
   return (
     <>
       <div className="home">
-        <Sidebar />
+        <Sidebar fetchPosts={fetchPosts} />
 
         <div className="home-posts">
           <div className="posts">
-            {postsData?.map((item, index) => (
+            {postsData?.map((item) => (
               <PostCard
-                key={index}
+                id={item?.id}
+                key={item?.id}
                 username={currentUser?.username}
                 avatarURL={currentUser?.avatarURL}
                 postImageUrl={item?.postImageUrl}
                 caption={item?.caption}
                 likes={item?.likes}
                 createdAt={item?.createdAt}
+                likeUsers={item?.likeUsers}
               />
             ))}
           </div>

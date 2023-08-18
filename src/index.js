@@ -9,7 +9,7 @@ import AuthContextProvider from './Context/AuthContext';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <SnackbarProvider maxSnack={3} transitionDuration={3000}>
+    <SnackbarProvider maxSnack={3} transitionDuration={1000}>
     <AuthContextProvider>
       <App />
     </AuthContextProvider>
