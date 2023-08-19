@@ -2,12 +2,7 @@ import React, { useContext, useState } from 'react';
 import './styles.css';
 import Input from '../../Components/Input';
 import Logo from '../../Components/Logo';
-import {
-  collection,
-  doc,
-  getFirestore,
-  updateDoc,
-} from 'firebase/firestore';
+import { collection, doc, getFirestore, updateDoc } from 'firebase/firestore';
 import app from '../../firebaseConfig';
 import { getStorage, ref, uploadBytes } from 'firebase/storage';
 import { useNavigate } from 'react-router-dom';
@@ -16,7 +11,7 @@ import { useSnackbar } from 'notistack';
 import { getAuth } from 'firebase/auth';
 
 const EditPage = () => {
-  const { currentUser } = useContext(AuthContext);
+  const { currentUser, updateUser } = useContext(AuthContext);
   const [username, setUsername] = useState(currentUser?.username);
   const [fullName, setFullName] = useState(currentUser?.name);
   const [bio, setBio] = useState(currentUser?.bio);
@@ -36,10 +31,11 @@ const EditPage = () => {
       await updateDoc(userRef, dataToUpdate);
       console.log(uid, dataToUpdate);
       console.log('Updated');
-      enqueueSnackbar('Data updated successfully', {variant:'success'});
+      updateUser(dataToUpdate);
+      enqueueSnackbar('Data updated successfully', { variant: 'success' });
       navigate('/profile');
     } catch (error) {
-      enqueueSnackbar(error, {variant:'error'});
+      enqueueSnackbar(error, { variant: 'error' });
     }
   };
 
@@ -52,10 +48,12 @@ const EditPage = () => {
     let avatarURL = '';
     const avatarRef = ref(
       storage,
-      `avatar/${currentUser}.${image.name.split('.').pop()}`
+      `avatar/${currentUser?.uid}.${image.name.split('.').pop()}`
     );
     const snapshot = await uploadBytes(avatarRef, image);
     avatarURL = snapshot?.metadata?.fullPath;
+
+    console.log(avatarURL);
 
     const userRef = auth?.currentUser?.uid;
     const dataToUpdate = {
@@ -67,7 +65,7 @@ const EditPage = () => {
       avatarURL: avatarURL,
     };
     if (username && email === '') {
-   enqueueSnackbar('Please enter some value', {variant:'error'});
+      enqueueSnackbar('Please enter some value', { variant: 'error' });
     }
     updateUserInfo(userRef, dataToUpdate);
   };

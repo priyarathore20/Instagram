@@ -145,6 +145,9 @@ const Signup = () => {
             avatarURL: '',
             bio: '',
             uid: data.user.uid,
+            followers: 0,
+            following: 0,
+            postCount: 0,
           };
           await addDataWithCustomID(documentID, dataToAdd);
           navigate('/home');

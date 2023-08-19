@@ -1,69 +1,70 @@
-.profile-section{
-display: flex;
-flex-direction: row;
-justify-content: space-between;
+.profile-section {
+  padding-left: 244px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
-.profile{
-height: 100%;
-width: 100%;
-margin: 50px 60px;
+.profile {
+  height: 100%;
+  width: 100%;
+  margin: 50px 60px;
 }
-.avatar-img-1{
+.avatar-img-1 {
   border-radius: 50%;
   height: 150px;
   width: 150px;
 }
-.profile-edit{
+.profile-edit {
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
   gap: 200px;
   align-items: flex-start;
 }
-.profile-details{
+.profile-details {
   display: flex;
   flex-direction: column;
-  }
-  .profile-username{
-    display: flex;
-    flex-direction: row;
-    width: 200px;
-    justify-content: space-between;
-    margin-bottom: 10px;
-  }
-  .profile-username-name{
-    font-size: 20px;
-  }
-  .profile-username-btn{
-    font-size: 16px;
-    padding: 6px;
-    background-color: #ccc;
-    cursor: pointer;
-    outline: none;
-    border: #999797;
-    border-radius: 5px;
-  }
-  .followers{
-    display: flex;
-    flex-direction: row;
-    width: 220px;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 10px;
-  }
-  .followers p{
-    font-size: 16px;
-font-weight: 500;
-  }
-  .profile-images{
-    display: flex;
-    justify-content: flex-start;
-    flex-wrap: wrap;
-    align-items: center;
-    width: 1000px;
-    margin-top: 50px;
-  }
-  .profile-img{
-    height: 250px;
-    width: 300px;
-  }
+}
+.profile-username {
+  display: flex;
+  flex-direction: row;
+  width: 200px;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+.profile-username-name {
+  font-size: 20px;
+}
+.profile-username-btn {
+  font-size: 16px;
+  padding: 6px;
+  background-color: #ccc;
+  cursor: pointer;
+  outline: none;
+  border: #999797;
+  border-radius: 5px;
+}
+.followers {
+  display: flex;
+  flex-direction: row;
+  width: 220px;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+.followers p {
+  font-size: 16px;
+  font-weight: 500;
+}
+.profile-images {
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  align-items: center;
+  width: 1000px;
+  margin-top: 50px;
+}
+.profile-img {
+  height: 250px;
+  width: 300px;
+}

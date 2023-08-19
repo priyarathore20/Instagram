@@ -6,6 +6,19 @@ import { getAuth } from 'firebase/auth';
 import app from '../../firebaseConfig';
 import { AuthContext } from '../../Context/AuthContext';
 
+const getAvatarUrl = (avatarURL) => {
+  if (avatarURL) {
+    return `${process.env?.REACT_APP_MEDIA_URL}${avatarURL?.replaceAll(
+      '/',
+      '%2F'
+    )}?alt=media`;
+  } else if (avatarURL?.includes('googleusercontent')) {
+    return avatarURL;
+  } else {
+    return 'https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png?20150327203541';
+  }
+};
+
 const ProfilePage = () => {
   const { currentUser } = useContext(AuthContext);
   // console.log('here', currentUser);
@@ -14,6 +27,8 @@ const ProfilePage = () => {
   const handleClick = () => {
     navigate('/edit-profile');
   };
+
+  console.log(currentUser);
 
   return (
     <div className="profile-section">
@@ -24,9 +39,7 @@ const ProfilePage = () => {
         <div className="profile-edit">
           <div>
             <img
-              src={`https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png?20150327203541 ${
-                currentUser?.avatarURL !== '' ? currentUser?.avatarURL : ''
-              }`}
+              src={getAvatarUrl(currentUser?.avatarURL)}
               className="avatar-img-1"
               alt="User Avatar"
             />
