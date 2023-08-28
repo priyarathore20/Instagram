@@ -21,3 +21,8 @@
   width: 100%;
   max-width: 470px;
 }
+
+.sidebar-2{
+/* visibility: hidden; */
+display: none;
+}

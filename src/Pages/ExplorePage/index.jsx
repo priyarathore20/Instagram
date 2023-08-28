@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './styles.css';
 import Sidebar from '../../Components/Sidebar';
 import { FaSearch } from 'react-icons/fa';
@@ -26,6 +26,10 @@ const ExplorePage = () => {
       console.log(error);
     }
   };
+
+  // useEffect(()=>{
+  //   fetchImages()
+  // },[])
 
   return (
     <div className='explore-page'>

@@ -52,6 +52,7 @@ const Sidebar = ({ fetchPosts }) => {
   const onLogout = async () => {
     try {
       await auth.signOut();
+      setisDialogOpen(false)
     } catch (error) {
       console.log(error);
     }
@@ -106,6 +107,10 @@ const Sidebar = ({ fetchPosts }) => {
     setLoading(false);
   };
 
+  function handleMenu(){
+    setisDialogOpen(true)
+  }
+
   return (
     <div className="sidebar">
       <div className="sidebar-logo">
@@ -116,41 +121,41 @@ const Sidebar = ({ fetchPosts }) => {
         />
       </div>
       <div className="sidebar-options">
-        <Link className="sidebar-option" to="/home">
+        <Link className="sidebar-option" to="/home" key={1}>
           <AiFillHome /> Home
         </Link>
-        <Link className="sidebar-option" to="/search">
+        <Link className="sidebar-option" to="/search" key={2}>
           <AiOutlineSearch /> Search
         </Link>
-        <Link className="sidebar-option" to="/explore">
+        <Link className="sidebar-option" to="/explore" key={3}>
           <MdOutlineExplore /> Explore
         </Link>
-        <Link className="sidebar-option" to="#">
+        <Link className="sidebar-option" to="#" key={4}>
           <TfiVideoClapper /> Reels
         </Link>
-        <Link className="sidebar-option" to="#">
+        <Link className="sidebar-option" to="#" key={5}>
           <RiMessengerLine /> Messages
         </Link>
-        <Link className="sidebar-option" to="#">
+        <Link className="sidebar-option" to="#" key={6}>
           <AiOutlineHeart /> Notifications
         </Link>
-        <Link className="sidebar-option" to="#" onClick={handleClickOpen}>
+        <Link className="sidebar-option" to="#" onClick={handleClickOpen} key={7}>
           <FiPlusSquare /> Create
         </Link>
-        <Link className="sidebar-option" to="/profile">
+        <Link className="sidebar-option" to="/profile" key={8}>
           <RxAvatar /> Profile
         </Link>
       </div>
       <div className="dropup-menu">
-        <Link className="sidebar-option" to="#">
+        <Link className="sidebar-option" to="#"onClick={handleMenu}>
           <AiOutlineMenu /> More
         </Link>
 
-        {/* <div className="menu-item">
-          <Link to="#" onClick={onLogout}>
+        <div className="menu-item">
+          <Dialog open={isDialogOpen} onClick={onLogout}>
             Log out
-          </Link>
-        </div> */}
+          </Dialog>
+        </div>
       </div>
 
       <Dialog open={open} onClose={handleClose}>

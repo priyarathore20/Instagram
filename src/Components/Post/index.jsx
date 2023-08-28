@@ -24,7 +24,6 @@ const PostCard = ({
 
   const storage = getStorage(app);
 
-  const [imageUrl, setImageUrl] = useState('');
   const [likeUsersArray, setLikeUsersArray] = useState(likeUsers);
   const [likesCount, setLikesCount] = useState(likes);
 

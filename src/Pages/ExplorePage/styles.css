@@ -2,12 +2,11 @@
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  /* justify-content: space-between; */
   overflow: hidden;
 }
 .explore {
   flex: 1;
-  margin: 50px;
+  margin: 50px 50px 50px 244px;
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
@@ -24,7 +23,7 @@
   outline: none;
 }
 .explore-btn {
-  height: 45px;
+  height: 30px;
   width: 45px;
   background-color: white;
   border: #ccc 1px solid;
