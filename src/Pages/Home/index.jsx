@@ -1,7 +1,6 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './Styles.css';
 import Sidebar from '../../Components/Sidebar';
-import Posts from '../../Components/Post';
 import Suggestions from '../../Components/Suggestions';
 import {
   collection,
@@ -14,10 +13,8 @@ import { getStorage } from 'firebase/storage';
 import app from '../../firebaseConfig';
 import { useSnackbar } from 'notistack';
 import PostCard from '../../Components/Post';
-import { AuthContext } from '../../Context/AuthContext';
 
 const Homepage = () => {
-  const { currentUser } = useContext(AuthContext);
 
   const db = getFirestore(app);
   const storage = getStorage(app);
@@ -57,8 +54,8 @@ const Homepage = () => {
               <PostCard
                 id={item?.id}
                 key={item?.id}
-                username={currentUser?.username}
-                avatarURL={currentUser?.avatarURL}
+                username={item?.createdBy?.username}
+                avatarURL={item?.createdBy?.avatarURL}
                 postImageUrl={item?.postImageUrl}
                 caption={item?.caption}
                 likes={item?.likes}

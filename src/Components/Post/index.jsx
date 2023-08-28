@@ -61,11 +61,24 @@ const PostCard = ({
     }
   };
 
+  const getAvatarUrl = (avatarURL) => {
+    if (avatarURL) {
+      return `${process.env?.REACT_APP_MEDIA_URL}${avatarURL?.replaceAll(
+        '/',
+        '%2F'
+      )}?alt=media`;
+    } else if (avatarURL?.includes('googleusercontent')) {
+      return avatarURL;
+    } else {
+      return 'https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png?20150327203541';
+    }
+  };
+
   return (
     <div className="post-card">
       <div className="post-header">
         <div className="profile-pic">
-          <img src={avatarURL} alt="#" />
+          <img src={getAvatarUrl(avatarURL)} alt="#" />
         </div>
         <div className="username">
           {username}

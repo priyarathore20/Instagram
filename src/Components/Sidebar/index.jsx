@@ -1,29 +1,23 @@
-import React, { useContext, useState } from 'react';
-import './styles.css';
-import Logo from '../Logo';
+import React, { useContext, useState } from "react";
+import "./styles.css";
+import Logo from "../Logo";
 import {
   AiFillHome,
   AiOutlineHeart,
   AiOutlineMenu,
   AiOutlineSearch,
-} from 'react-icons/ai';
-import { MdOutlineExplore } from 'react-icons/md';
-import { TfiVideoClapper } from 'react-icons/tfi';
-import { RiMessengerLine } from 'react-icons/ri';
-import { FiPlusSquare } from 'react-icons/fi';
-import { RxAvatar } from 'react-icons/rx';
-import app from '../../firebaseConfig';
-import { getAuth } from 'firebase/auth';
-import { Link } from 'react-router-dom';
-import { AuthContext } from '../../Context/AuthContext';
-import {
-  addDoc,
-  collection,
-  doc,
-  getFirestore,
-  setDoc,
-} from 'firebase/firestore';
-import { getStorage, ref, uploadBytes } from 'firebase/storage';
+} from "react-icons/ai";
+import { MdOutlineExplore } from "react-icons/md";
+import { TfiVideoClapper } from "react-icons/tfi";
+import { RiMessengerLine } from "react-icons/ri";
+import { FiPlusSquare } from "react-icons/fi";
+import { RxAvatar } from "react-icons/rx";
+import app from "../../firebaseConfig";
+import { getAuth } from "firebase/auth";
+import { Link } from "react-router-dom";
+import { AuthContext } from "../../Context/AuthContext";
+import { addDoc, collection, getFirestore } from "firebase/firestore";
+import { getStorage, ref, uploadBytes } from "firebase/storage";
 import {
   Button,
   CircularProgress,
@@ -32,8 +26,8 @@ import {
   DialogContent,
   DialogTitle,
   TextField,
-} from '@mui/material';
-import { useSnackbar } from 'notistack';
+} from "@mui/material";
+import { useSnackbar } from "notistack";
 
 const Sidebar = ({ fetchPosts }) => {
   const [image, setImage] = useState(null);
@@ -42,7 +36,7 @@ const Sidebar = ({ fetchPosts }) => {
   const db = getFirestore(app);
   const storage = getStorage(app);
   const [open, setOpen] = useState(false);
-  const [caption, setCaption] = useState('');
+  const [caption, setCaption] = useState("");
   const [loading, setLoading] = useState(false);
   const [isDialogOpen, setisDialogOpen] = useState(false);
   const { enqueueSnackbar } = useSnackbar();
@@ -81,7 +75,7 @@ const Sidebar = ({ fetchPosts }) => {
     setLoading(true);
     e.preventDefault();
     try {
-      let postURL = '';
+      let postURL = "";
       const postRef = ref(storage, `posts/${image.name}`);
       const snapshot = await uploadBytes(postRef, image);
       postURL = snapshot?.metadata?.fullPath;
@@ -91,18 +85,22 @@ const Sidebar = ({ fetchPosts }) => {
         caption: caption,
         likes: 0,
         createdAt: new Date(),
-        createdBy: currentUser?.uid,
+        createdBy: {
+          uid: currentUser?.uid,
+          avatarURL: currentUser?.avatarURL,
+          username: currentUser?.username,
+        },
       };
 
-      const dbRef = collection(db, 'Posts');
+      const dbRef = collection(db, "Posts");
       await addDoc(dbRef, dataToAdd);
-      enqueueSnackbar('Post created successfully', { variant: 'success' });
+      enqueueSnackbar("Post created successfully", { variant: "success" });
       fetchPosts();
 
       setOpen(false);
     } catch (err) {
       console.log(err);
-      enqueueSnackbar('Error in creating post', { variant: 'error' });
+      enqueueSnackbar("Error in creating post", { variant: "error" });
     }
 
     setLoading(false);
@@ -182,7 +180,7 @@ const Sidebar = ({ fetchPosts }) => {
             Cancel
           </Button>
           <Button disabled={loading} onClick={handleSubmit}>
-            {loading ? <CircularProgress size={24} /> : 'Create'}
+            {loading ? <CircularProgress size={24} /> : "Create"}
           </Button>
         </DialogActions>
       </Dialog>
