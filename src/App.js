@@ -11,13 +11,14 @@ import { useSnackbar } from 'notistack';
 const App = () => {
   const auth = getAuth(app);
   const { updateUser, currentUser } = useContext(AuthContext);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const db = getFirestore();
   const {enqueueSnackbar} = useSnackbar()
 
   useEffect(() => {
     auth.onAuthStateChanged(async (user) => {
       if (user) {
+    setLoading(true)
         try {
           const documentRef = doc(db, 'Profiles', user.uid);
           const documentSnapshot = await getDoc(documentRef);
