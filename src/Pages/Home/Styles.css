@@ -23,6 +23,15 @@
 }
 
 .sidebar-2{
-/* visibility: hidden; */
 display: none;
+}
+
+@media (min-width: 350px) and (max-width: 450px){
+  .sidebar-2{
+    display: block !important;
+    margin: 20px;
+  }
+  .home{
+    margin-left: 20px;
+  }
 }

@@ -52,9 +52,10 @@ const Sidebar = ({ fetchPosts }) => {
   const onLogout = async () => {
     try {
       await auth.signOut();
-      setisDialogOpen(false)
+      setisDialogOpen(false);
+      enqueueSnackbar("Logged out successfully", { variant: "success" });
     } catch (error) {
-      console.log(error);
+      enqueueSnackbar(error, { variant: "error" });
     }
   };
 
@@ -107,8 +108,8 @@ const Sidebar = ({ fetchPosts }) => {
     setLoading(false);
   };
 
-  function handleMenu(){
-    setisDialogOpen(true)
+  function handleMenu() {
+    setisDialogOpen(true);
   }
 
   return (
@@ -139,15 +140,21 @@ const Sidebar = ({ fetchPosts }) => {
         <Link className="sidebar-option" to="#" key={6}>
           <AiOutlineHeart /> Notifications
         </Link>
-        <Link className="sidebar-option" to="#" onClick={handleClickOpen} key={7}>
+        <Link
+          className="sidebar-option"
+          to="#"
+          onClick={handleClickOpen}
+          key={7}
+        >
           <FiPlusSquare /> Create
         </Link>
         <Link className="sidebar-option" to="/profile" key={8}>
           <RxAvatar /> Profile
         </Link>
       </div>
+
       <div className="dropup-menu">
-        <Link className="sidebar-option" to="#"onClick={handleMenu}>
+        <Link className="sidebar-option" to="#" onClick={handleMenu}>
           <AiOutlineMenu /> More
         </Link>
 

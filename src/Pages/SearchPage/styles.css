@@ -8,13 +8,13 @@
 .search-body{
   border: 1px solid #ccc;
   border-radius: 7px;
-  width: 40%;
-  height: 100%;
+  width: 450px;
+  min-height: 80vh;
   margin: 50px;
   padding: 30px;
   display: flex;
-  justify-content: center;
   align-items: center;
+  flex-direction: column;
 }
 .user-search-input{
   height: 29px;
@@ -23,4 +23,5 @@
   border-radius: 5px;
   outline: none;
   padding: 6px;
+  margin-top: 20px;
 }

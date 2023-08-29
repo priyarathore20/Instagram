@@ -1,16 +1,16 @@
-import React, { useContext, useState } from 'react';
-import './styles.css';
-import Logo from '../../Components/Logo';
-import Input from '../../Components/Input';
-import { FaGoogle } from 'react-icons/fa';
-import app from '../../firebaseConfig';
+import React, { useContext, useState } from "react";
+import "./styles.css";
+import Logo from "../../Components/Logo";
+import Input from "../../Components/Input";
+import { FaGoogle } from "react-icons/fa";
+import app from "../../firebaseConfig";
 import {
   getAuth,
   createUserWithEmailAndPassword,
   signInWithPopup,
   GoogleAuthProvider,
-} from 'firebase/auth';
-import { Navigate, useNavigate } from 'react-router-dom';
+} from "firebase/auth";
+import { Navigate, useNavigate } from "react-router-dom";
 import {
   collection,
   doc,
@@ -19,8 +19,8 @@ import {
   query,
   setDoc,
   where,
-} from 'firebase/firestore';
-import 'firebase/firestore';
+} from "firebase/firestore";
+import "firebase/firestore";
 import {
   Button,
   Dialog,
@@ -29,15 +29,16 @@ import {
   DialogContentText,
   DialogTitle,
   TextField,
-} from '@mui/material';
-import { AuthContext } from '../../Context/AuthContext';
+} from "@mui/material";
+import { AuthContext } from "../../Context/AuthContext";
+import { useSnackbar } from "notistack";
 
 const Signup = () => {
-  const [email, setEmail] = useState('abc@gmail.com');
-  const [password, setPassword] = useState('password');
-  const [username, setUsername] = useState('priya_099');
-  const [googleUsername, setGoogleUsername] = useState('priya_099');
-  const [name, setName] = useState('Priya');
+  const [email, setEmail] = useState("abc@gmail.com");
+  const [password, setPassword] = useState("password");
+  const [username, setUsername] = useState("priya_099");
+  const [googleUsername, setGoogleUsername] = useState("priya_099");
+  const [name, setName] = useState("Priya");
   const [open, setOpen] = useState(false);
   const [googleLoginData, setGoogleLoginData] = useState();
   const auth = getAuth(app);
@@ -45,6 +46,7 @@ const Signup = () => {
   const googleProvider = new GoogleAuthProvider();
   const db = getFirestore(app);
   const { currentUser } = useContext(AuthContext);
+  const { enqueueSnackbar } = useSnackbar();
 
   const handleOpen = () => {
     setOpen(true);
@@ -54,33 +56,34 @@ const Signup = () => {
   };
   const checkValueInFirestore = async (username) => {
     try {
-      const collectionRef = collection(db, 'Profiles');
-      const q = query(collectionRef, where('username', '==', username));
+      const collectionRef = collection(db, "Profiles");
+      const q = query(collectionRef, where("username", "==", username));
       // Execute the query and get the result
       const querySnapshot = await getDocs(q);
       return !querySnapshot.empty;
     } catch (error) {
       console.log(error);
+      enqueueSnackbar("error", { variant: "error" });
       return true;
     }
   };
 
   const handleSave = async () => {
     try {
-      if (googleUsername !== '') {
+      if (googleUsername !== "") {
         let usernameTaken = await checkValueInFirestore(googleUsername);
         console.log(usernameTaken);
         if (usernameTaken) {
-          alert('Username already taken');
+          alert("Username already taken");
         } else {
           const documentID = googleLoginData.user.uid;
           const dataToAdd = {
             name: googleLoginData.user.displayName,
             username: googleUsername,
             email: googleLoginData.user.email,
-            gender: '',
+            gender: "",
             avatarURL: googleLoginData.user.photoURL,
-            bio: '',
+            bio: "",
             uid: googleLoginData.user.uid,
           };
           await addDataWithCustomID(documentID, dataToAdd);
@@ -90,22 +93,23 @@ const Signup = () => {
       }
     } catch (error) {
       console.log(error);
+      enqueueSnackbar("error", { variant: "error" });
     }
   };
 
   const addDataWithCustomID = async (documentID, dataToAdd) => {
-    const docRef = doc(db, 'Profiles', documentID);
+    const docRef = doc(db, "Profiles", documentID);
     setDoc(docRef, dataToAdd)
       .then(() => {
         console.log(
-          'Data added successfully with custom document ID:',
+          "Data added successfully with custom document ID:",
           documentID
         );
 
-        navigate('/home');
+        navigate("/home");
       })
       .catch((error) => {
-        console.error('Error adding data:', error);
+        enqueueSnackbar("Error adding data:", { variant: "error" });
       });
   };
 
@@ -115,46 +119,46 @@ const Signup = () => {
       const data = await signInWithPopup(auth, googleProvider);
       setGoogleLoginData(data);
       handleOpen();
-      console.log(localStorage.setItem('user', JSON.stringify(data)));
-      console.log(data);
     } catch (error) {
       console.log(error);
+      enqueueSnackbar("error", { variant: "error" });
     }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      if (name !== '' && username !== '') {
+      if (name !== "" && username !== "") {
         let usernameTaken = await checkValueInFirestore(username);
         if (usernameTaken) {
-          alert('Username already taken');
+          alert("Username already taken");
         } else {
           const data = await createUserWithEmailAndPassword(
             auth,
             email,
             password
           );
-          console.log('user created', data);
+          console.log("user created", data);
           const documentID = data.user.uid;
           const dataToAdd = {
             name: name,
             username: username,
             email: email,
-            gender: '',
-            avatarURL: '',
-            bio: '',
+            gender: "",
+            avatarURL: "",
+            bio: "",
             uid: data.user.uid,
             followers: 0,
             following: 0,
             postCount: 0,
           };
           await addDataWithCustomID(documentID, dataToAdd);
-          navigate('/home');
+          navigate("/home");
         }
       }
     } catch (error) {
       console.log(error);
+      enqueueSnackbar("error", { variant: "error" });
     }
   };
 
@@ -211,16 +215,16 @@ const Signup = () => {
               </a>
             </p>
             <p className="signup-terms">
-              By signing up, you agree to our{' '}
+              By signing up, you agree to our{" "}
               <a href="https://help.instagram.com/581066165581870/?locale=en_GB">
-                {' '}
+                {" "}
                 Terms
               </a>
-              ,{' '}
+              ,{" "}
               <a href="https://www.facebook.com/privacy/policy">
                 Privacy policy
-              </a>{' '}
-              and{' '}
+              </a>{" "}
+              and{" "}
               <a href="https://help.instagram.com/1896641480634370/">
                 Cookies policy.
               </a>

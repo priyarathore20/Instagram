@@ -1,44 +1,87 @@
-import React, { useContext } from 'react'
-import Link from '../Link'
-import "./styles.css"
-import { AuthContext } from '../../Context/AuthContext'
+import React, { useContext } from "react";
+import Link from "../Link";
+import "./styles.css";
+import { AuthContext } from "../../Context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 const Suggestions = () => {
-const {currentUser} = useContext(AuthContext)
+  const { currentUser } = useContext(AuthContext);
+  const navigate = useNavigate();
+
+  const getAvatarUrl = (avatarURL) => {
+    if (avatarURL) {
+      return `${process.env?.REACT_APP_MEDIA_URL}${avatarURL?.replaceAll(
+        "/",
+        "%2F"
+      )}?alt=media`;
+    } else if (avatarURL?.includes("googleusercontent")) {
+      return avatarURL;
+    } else {
+      return "https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png?20150327203541";
+    }
+  };
+
+  const navigation = () => {
+    navigate("/profile");
+  };
 
   return (
-    <div className='suggest'>
-      <div className='suggested'>
-        <img src={currentUser?.avatarURL} className='avatar-img' />
-        <div >
-          <p className="username">{currentUser?.username}</p>
-          <p className="full-name">{currentUser?.name}</p>
+    <div className="suggest">
+      <div className="suggested">
+        <img
+          src={getAvatarUrl(currentUser?.avatarURL)}
+          className="avatar-img"
+          alt="avatar"
+        />
+        <div>
+          <p onClick={navigation} className="username">
+            {currentUser?.username}
+          </p>
+          <p onClick={navigation} className="full-name">
+            {currentUser?.name}
+          </p>
         </div>
       </div>
-      <p className='suggesteds'>Suggested for you </p>
+      <p className="suggesteds">Suggested for you </p>
       <div className="suggested">
-              <img src='https://w0.peakpx.com/wallpaper/856/263/HD-wallpaper-noze-icon-in-2022-really-pretty-girl-cute-girl-pic-ulzzang-girl.jpg' className='avatar-img' />
+        <img
+          alt="avatar"
+          src="https://w0.peakpx.com/wallpaper/856/263/HD-wallpaper-noze-icon-in-2022-really-pretty-girl-cute-girl-pic-ulzzang-girl.jpg"
+          className="avatar-img"
+        />
         <div>
           <p className="username">Virushi20</p>
           <p className="full-name">Virushi jha</p>
         </div>
       </div>
       <div className="suggested">
-        <img src="https://i.pinimg.com/236x/ea/dd/31/eadd31709d797e9b09ab2ac82fba5d63.jpg" className='avatar-img'/>
+        <img
+          alt="avatar"
+          src="https://i.pinimg.com/236x/ea/dd/31/eadd31709d797e9b09ab2ac82fba5d63.jpg"
+          className="avatar-img"
+        />
         <div>
           <p className="username">Hameed0921</p>
           <p className="full-name">Hameed Sheikh</p>
         </div>
       </div>
       <div className="suggested">
-        <img src="https://qph.cf2.quoracdn.net/main-qimg-11d0c7a027d67e01bfd550dc0f0237da-lq" className='avatar-img'/>
+        <img
+          alt="avatar"
+          src="https://qph.cf2.quoracdn.net/main-qimg-11d0c7a027d67e01bfd550dc0f0237da-lq"
+          className="avatar-img"
+        />
         <div>
           <p className="username">Drishti01</p>
           <p className="full-name">Drishti sharma</p>
         </div>
       </div>
       <div className="suggested">
-        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQwfb0VpLu-UfjBDZwZgOHuM-Hld04NBGAxsINkHwc&s" className='avatar-img'  />
+        <img
+          alt="avatar"
+          src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQwfb0VpLu-UfjBDZwZgOHuM-Hld04NBGAxsINkHwc&s"
+          className="avatar-img"
+        />
         <div>
           <p className="username">ayush_agg</p>
           <p className="full-name">Ayush Agarwal</p>
@@ -80,7 +123,7 @@ const {currentUser} = useContext(AuthContext)
       </div>
       <p className="copyright">&copy; 2023 Instagram from Meta </p>
     </div>
-  )
-}
+  );
+};
 
-export default Suggestions
+export default Suggestions;
