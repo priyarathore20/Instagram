@@ -1,13 +1,13 @@
-import React, { useContext, useState } from 'react';
-import './styles.css';
-import { AiOutlineComment, AiOutlineHeart } from 'react-icons/ai';
-import app from '../../firebaseConfig';
-import { getStorage } from 'firebase/storage';
-import { PiShareFat } from 'react-icons/pi';
-import { FcLike } from 'react-icons/fc';
-import { AuthContext } from '../../Context/AuthContext';
-import { collection, doc, getFirestore, updateDoc } from 'firebase/firestore';
-import { getRelativeTime } from '../../helper';
+import React, { useContext, useState } from "react";
+import "./styles.css";
+import { AiOutlineComment, AiOutlineHeart } from "react-icons/ai";
+import app from "../../firebaseConfig";
+import { getStorage } from "firebase/storage";
+import { PiShareFat } from "react-icons/pi";
+import { FcLike } from "react-icons/fc";
+import { AuthContext } from "../../Context/AuthContext";
+import { collection, doc, getFirestore, updateDoc } from "firebase/firestore";
+import { getRelativeTime } from "../../helper";
 
 const PostCard = ({
   id,
@@ -32,7 +32,7 @@ const PostCard = ({
     const updatedData = Array.from(set);
     const dataToUpdate = { likeUsers: updatedData, likes: updatedData?.length };
     try {
-      const postsCollection = collection(db, 'Posts');
+      const postsCollection = collection(db, "Posts");
       const userRef = doc(postsCollection, id);
       const data = await updateDoc(userRef, dataToUpdate);
       console.log(id, data);
@@ -49,7 +49,7 @@ const PostCard = ({
       likeUsers: updatedData,
     };
     try {
-      const postsCollection = collection(db, 'Posts');
+      const postsCollection = collection(db, "Posts");
       const userRef = doc(postsCollection, id);
       await updateDoc(userRef, dataToUpdate);
       console.log(id, dataToUpdate);
@@ -62,14 +62,13 @@ const PostCard = ({
 
   const getAvatarUrl = (avatarURL) => {
     if (avatarURL) {
-      return `${process.env?.REACT_APP_MEDIA_URL}${avatarURL?.replaceAll(
-        '/',
-        '%2F'
-      )}?alt=media`;
-    } else if (avatarURL?.includes('googleusercontent')) {
+      return `${
+        process.env?.REACT_APP_MEDIA_URL
+      }${currentUser?.avatarURL?.replaceAll("/", "%2F")}?alt=media`;
+    } else if (avatarURL?.includes("googleusercontent")) {
       return avatarURL;
     } else {
-      return 'https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png?20150327203541';
+      return "https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png?20150327203541";
     }
   };
 
@@ -82,7 +81,7 @@ const PostCard = ({
         <div className="username">
           {username}
           <span className="timestamp">
-            {' '}
+            {" "}
             • {getRelativeTime(createdAt?.seconds)}
           </span>
         </div>
@@ -90,8 +89,8 @@ const PostCard = ({
       <img
         className="post-image"
         src={`${process.env?.REACT_APP_MEDIA_URL}${postImageUrl?.replaceAll(
-          '/',
-          '%2F'
+          "/",
+          "%2F"
         )}?alt=media`}
         alt="post"
       />

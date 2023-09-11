@@ -1,28 +1,28 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import './App.css';
-import { routes } from './Router/routes';
-import { getAuth } from 'firebase/auth';
-import { AuthContext } from './Context/AuthContext';
-import app from './firebaseConfig';
-import { doc, getDoc, getFirestore } from 'firebase/firestore';
-import { useSnackbar } from 'notistack';
+import React, { useContext, useEffect, useState } from "react";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import "./App.css";
+import { routes } from "./Router/routes";
+import { getAuth } from "firebase/auth";
+import { AuthContext } from "./Context/AuthContext";
+import app from "./firebaseConfig";
+import { doc, getDoc, getFirestore } from "firebase/firestore";
+import { useSnackbar } from "notistack";
 
 const App = () => {
   const auth = getAuth(app);
   const { updateUser, currentUser } = useContext(AuthContext);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const db = getFirestore();
-  const {enqueueSnackbar} = useSnackbar()
+  const { enqueueSnackbar } = useSnackbar();
 
   useEffect(() => {
     auth.onAuthStateChanged(async (user) => {
+      console.log(user);
       if (user) {
-    setLoading(true)
         try {
-          const documentRef = doc(db, 'Profiles', user.uid);
+          const documentRef = doc(db, "Profiles", user.uid);
           const documentSnapshot = await getDoc(documentRef);
-
+          console.log("here");
           if (documentSnapshot.exists()) {
             updateUser(documentSnapshot.data());
             console.log(documentSnapshot.data());
@@ -30,15 +30,15 @@ const App = () => {
             updateUser(null);
           }
         } catch (error) {
-          console.error('Error fetching document:', error);
-          enqueueSnackbar(error, {variant: 'error'})
-        } 
-        finally {
+          console.error("Error fetching document:", error);
+          enqueueSnackbar(error, { variant: "error" });
+        } finally {
           setLoading(false);
         }
       } else {
         updateUser(null);
         auth.signOut();
+        setLoading(false);
       }
     });
   }, []);

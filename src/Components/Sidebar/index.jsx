@@ -16,7 +16,13 @@ import app from "../../firebaseConfig";
 import { getAuth } from "firebase/auth";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../Context/AuthContext";
-import { addDoc, collection, getFirestore } from "firebase/firestore";
+import {
+  addDoc,
+  collection,
+  doc,
+  getFirestore,
+  setDoc,
+} from "firebase/firestore";
 import { getStorage, ref, uploadBytes } from "firebase/storage";
 import {
   Button,
@@ -29,7 +35,7 @@ import {
 } from "@mui/material";
 import { useSnackbar } from "notistack";
 
-const Sidebar = ({ fetchPosts }) => {
+const Sidebar = ({ fetchPosts = () => {} }) => {
   const [image, setImage] = useState(null);
   const auth = getAuth(app);
   const { currentUser } = useContext(AuthContext);
@@ -78,7 +84,11 @@ const Sidebar = ({ fetchPosts }) => {
     e.preventDefault();
     try {
       let postURL = "";
-      const postRef = ref(storage, `posts/${image.name}`);
+      const dbRef = doc(collection(db, "Posts"));
+      const postRef = ref(
+        storage,
+        `posts/${dbRef.id}.${image.name.split(".").pop()}`
+      );
       const snapshot = await uploadBytes(postRef, image);
       postURL = snapshot?.metadata?.fullPath;
 
@@ -94,12 +104,14 @@ const Sidebar = ({ fetchPosts }) => {
         },
       };
 
-      const dbRef = collection(db, "Posts");
-      await addDoc(dbRef, dataToAdd);
+      // Add a new document with a generated id
+      console.log(dbRef);
+      // later...
+      await setDoc(dbRef, dataToAdd);
       enqueueSnackbar("Post created successfully", { variant: "success" });
       fetchPosts();
-
       setOpen(false);
+      setCaption("");
     } catch (err) {
       console.log(err);
       enqueueSnackbar("Error in creating post", { variant: "error" });

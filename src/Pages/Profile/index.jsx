@@ -49,7 +49,7 @@ const ProfilePage = () => {
       res.forEach((doc) => {
         data.push({ id: doc?.id, ...doc.data() });
       });
-      console.log(data)
+      console.log(data);
       setImageUrl(data);
     } catch (error) {
       console.log(error);
@@ -101,14 +101,12 @@ const ProfilePage = () => {
             <div className="profile-images" key={img.id}>
               <img
                 className="profile-img"
-                src={`${process.env?.REACT_APP_MEDIA_URL}${img.postImageUrl?.replaceAll(
-                  "/",
-                  "%2F"
-                )}`}
+                src={`${
+                  process.env?.REACT_APP_MEDIA_URL
+                }${img.postImageUrl?.replaceAll("/", "%2F")}?alt=media`}
                 alt="post"
               />
             </div>
-            ;
           </>
         ))}
       </div>
