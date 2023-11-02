@@ -44,3 +44,10 @@
   max-width: 300px;
   margin-bottom: 20px;
 }
+@media screen and (max-width: 550px) {
+  .Suggest{
+    display: none;
+    visibility: hidden;
+  }
+  
+}
