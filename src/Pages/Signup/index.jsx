@@ -170,7 +170,7 @@ const Signup = () => {
     <>
       <div className="signup">
         <div className="box-2">
-          <div>
+          <div className="logo-img">
             <Logo />
           </div>
           <p className="signup-txt">
@@ -182,30 +182,34 @@ const Signup = () => {
             <span>Signup in With Google</span>
           </button>
           <p className="or">OR</p>
-          <form className="form" onSubmit={handleSubmit}>
+          <form className="signup-form" onSubmit={handleSubmit}>
             <Input
               onChange={(e) => setEmail(e.target.value)}
               value={email}
               type="text"
               placeholder="Mobile number or email address"
+              className="form-inputt"
             />
             <Input
               onChange={(e) => setName(e.target.value)}
               value={name}
               type="text"
               placeholder="Full name"
+              className="form-inputt"
             />
             <Input
               onChange={(e) => setUsername(e.target.value)}
               value={username}
               type="text"
               placeholder="Username"
+              className="form-inputt"
             />
             <Input
               onChange={(e) => setPassword(e.target.value)}
               value={password}
               type="password"
               placeholder="Password"
+              className="form-inputt"
             />
             <p className="signup-terms">
               People who use our service may have uploaded your contact
