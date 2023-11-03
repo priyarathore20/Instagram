@@ -93,19 +93,23 @@ const LoginPage = () => {
         />
         <div className="box-1">
           <div className="login-box">
-            <Logo />
+            <div className="logo-img">
+              <Logo />
+            </div>
             <form className="form" onSubmit={handleClick}>
               <Input
                 type="text"
                 placeholder="Phone number, username or email address"
                 onChange={(e) => setEmail(e.target.value)}
                 value={email}
+                className="form-input"
               />
               <Input
                 type="password"
                 placeholder="Password"
                 onChange={(e) => setPassword(e.target.value)}
                 value={password}
+                className="form-input"
               />
               <button className="login-btn">Log in</button>
             </form>

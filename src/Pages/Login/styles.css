@@ -31,6 +31,13 @@
 .form{
   width: fit-content;
 }
+.form-input{
+  width: 100%;
+  outline: none;
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin-bottom: 15px;
+}
 .login-img{
   height: fit-content;
 }
@@ -118,4 +125,68 @@
   font-size: 14px;
   color: #737377;
   margin-bottom: 20px;
+}
+@media screen and (max-width: 890px) {
+.login-img{
+  height: 580px;
+  width: 400px;
+}
+.logo-img{
+  width: 180px;
+}
+}
+
+@media screen and (max-width: 738px) {
+.login-img{
+ display: none;
+}
+.logo-img{
+  width: 160px;
+}
+.form{
+  width: 350px;
+}
+}
+
+@media screen and (max-width: 586px) {
+.login-img{
+display: none;
+}
+.logo-img{
+  width: 180px;
+}
+.form{
+  width: 350px;
+}
+}
+
+@media screen and (max-width: 486px) {
+  .login-img{
+    display: none;
+  }
+  .logo-img{
+    width: 180px;
+  }
+  .form{
+    width: 300px;
+  }
+}
+
+@media screen and (max-width: 376px) {
+  .login-img{
+    display: none;
+  }
+  .login-box{
+    width: 300px;
+  }
+  .logo-img{
+    width: 160px;
+  }
+  .form{
+    width: 275px;
+  }
+
+  .other-method{
+    width: 100%;
+  }
 }

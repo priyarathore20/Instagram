@@ -6,15 +6,21 @@
 }
 .explore {
   flex: 1;
-  margin: 50px 50px 50px 244px;
+  /* margin: 50px 50px 50px 244px; */
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
 }
+.explore-form{
+  margin-top: 20px;
+  padding-top: 30px;
+  display: flex;
+}
 .explore-input {
-  width: 400px;
+  width: 100%;
+  max-width: 400px;
   height: 28px;
   font-size: 16px;
   padding: 8px 13px;
@@ -24,7 +30,8 @@
 }
 .explore-btn {
   height: 30px;
-  width: 45px;
+  width: 100%;
+  max-width: 45px;
   background-color: white;
   border: #ccc 1px solid;
   outline: none;
@@ -34,10 +41,9 @@
 .explore-img {
   overflow: hidden;
   width: 100%;
-
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  gap: 1px 1px;
+  display: flex;
+justify-content: center;
+flex-wrap: wrap;
 }
 
 .explore-img img {
@@ -46,4 +52,11 @@
   object-fit: cover;
   max-height: 300px;
   /* aspect-ratio: 1/1; */
+}
+
+@media screen and (max-width: 760px) {
+  .searched-images{
+      width: 150px;
+      height: 250px;
+  }
 }

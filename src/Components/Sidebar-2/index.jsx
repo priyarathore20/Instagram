@@ -35,7 +35,7 @@ import {
 } from "@mui/material";
 import { useSnackbar } from "notistack";
 
-const Sidebar = ({ fetchPosts = () => {} }) => {
+const Sidebar2 = ({ fetchPosts = () => {} }) => {
   const [image, setImage] = useState(null);
   const auth = getAuth(app);
   const { currentUser } = useContext(AuthContext);
@@ -119,28 +119,28 @@ const Sidebar = ({ fetchPosts = () => {} }) => {
       <div className="sidebar-logo">
         <img
           className="logo"
-          src="https://logos-download.com/wp-content/uploads/2016/03/Instagram_Logo_2016.svg"
+          src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/Instagram_logo_2016.svg/2048px-Instagram_logo_2016.svg.png"
           alt="#"
         />
       </div>
       <div className="sidebar-options">
         <Link className="sidebar-option" to="/home" key={1}>
-          <AiFillHome /> Home
+          <AiFillHome />
         </Link>
         <Link className="sidebar-option" to="/search" key={2}>
-          <AiOutlineSearch /> Search
+          <AiOutlineSearch />
         </Link>
         <Link className="sidebar-option" to="/explore" key={3}>
-          <MdOutlineExplore /> Explore
+          <MdOutlineExplore />
         </Link>
         <Link className="sidebar-option" to="#" key={4}>
-          <TfiVideoClapper /> Reels
+          <TfiVideoClapper />
         </Link>
         <Link className="sidebar-option" to="#" key={5}>
-          <RiMessengerLine /> Messages
+          <RiMessengerLine />
         </Link>
         <Link className="sidebar-option" to="#" key={6}>
-          <AiOutlineHeart /> Notifications
+          <AiOutlineHeart />
         </Link>
         <Link
           className="sidebar-option"
@@ -148,16 +148,16 @@ const Sidebar = ({ fetchPosts = () => {} }) => {
           onClick={handleClickOpen}
           key={7}
         >
-          <FiPlusSquare /> Create
+          <FiPlusSquare />
         </Link>
         <Link className="sidebar-option" to="/profile" key={8}>
-          <RxAvatar /> Profile
+          <RxAvatar />
         </Link>
       </div>
 
       <div className="dropup-menu">
         <Link className="sidebar-option" to="#" onClick={handleMenu}>
-          <AiOutlineMenu /> More
+          <AiOutlineMenu />
         </Link>
 
         <div className="menu-item">
@@ -202,4 +202,4 @@ const Sidebar = ({ fetchPosts = () => {} }) => {
   );
 };
 
-export default Sidebar;
+export default Sidebar2;

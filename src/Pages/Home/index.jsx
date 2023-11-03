@@ -20,6 +20,7 @@ import { TfiVideoClapper } from "react-icons/tfi";
 import { RiMessengerLine } from "react-icons/ri";
 import { FiPlusSquare } from "react-icons/fi";
 import { RxAvatar } from "react-icons/rx";
+import Sidebar2 from "../../Components/Sidebar-2";
 
 const Homepage = () => {
   const db = getFirestore(app);
@@ -52,46 +53,11 @@ const Homepage = () => {
   return (
     <>
       <div className="home">
-        <div>
+        <div className="sidebar-1">
           <Sidebar fetchPosts={fetchPosts} />
         </div>
         <div className="sidebar-2">
-          <div className="sidebar-logo">
-            <img
-              className="logo"
-              src="https://logos-download.com/wp-content/uploads/2016/03/Instagram_Logo_2016.svg"
-              alt="#"
-            />
-          </div>
-          <div className="sidebar-options">
-            <Link className="sidebar-option sidebar-option-1" to={"/home"}>
-              <AiFillHome />
-            </Link>
-            <Link className="sidebar-option sidebar-option-1" to={"/search"}>
-              <AiOutlineSearch />
-            </Link>
-            <Link className="sidebar-option sidebar-option-1" to={"/explore"}>
-              <MdOutlineExplore />
-            </Link>
-            <Link className="sidebar-option sidebar-option-1" to={"/reels"}>
-              <TfiVideoClapper />
-            </Link>
-            <Link className="sidebar-option sidebar-option-1" to={"/message"}>
-              <RiMessengerLine />
-            </Link>
-            <Link
-              className="sidebar-option sidebar-option-1"
-              to={"/notifications"}
-            >
-              <AiOutlineHeart />
-            </Link>
-            <Link className="sidebar-option sidebar-option-1" to={"/create"}>
-              <FiPlusSquare />
-            </Link>
-            <Link className="sidebar-option sidebar-option-1" to={"/profile"}>
-              <RxAvatar />
-            </Link>
-          </div>
+          <Sidebar2 fetchPosts={fetchPosts} />
         </div>
         <div className="home-posts">
           <div className="posts">
@@ -110,8 +76,9 @@ const Homepage = () => {
             ))}
           </div>
         </div>
-
-        <Suggestions />
+        <div className="suggestion">
+          <Suggestions />
+        </div>
       </div>
     </>
   );

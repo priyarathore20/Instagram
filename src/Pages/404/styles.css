@@ -1,11 +1,30 @@
-.not-found{
+.not-found {
   display: flex;
   justify-content: center;
   align-items: center;
-  flex-direction: column;
-   margin: 10%;
+  width: 100vw;
+  height: 100vh;
 }
-.error-img{
-  height: 50%;
-  width: 50%;
+.error-img {
+  height: 70%;
+  width: 80%;
+}
+
+@media screen and (max-width: 361px) {
+  .error-img {
+    height: 60%;
+    width: 90%;
+  }
+}
+@media screen and (max-width: 586px) {
+  .error-img {
+    height: 70%;
+    width: 90%;
+  }
+}
+@media screen and (max-width: 761px) {
+  .error-img {
+    height: 70%;
+    width: 90%;
+  }
 }

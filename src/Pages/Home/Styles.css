@@ -2,6 +2,7 @@
   display: flex;
   justify-content: center;
   margin-left: 244px;
+/* align-items: center; */
   height: 100vh;
   overflow-y: auto;
   padding-top: 40px;
@@ -26,12 +27,23 @@
 display: none;
 }
 
-@media (min-width: 350px) and (max-width: 450px){
+@media screen and (max-width: 450px){
+  .sidebar-1{
+    display: none;
+  }
   .sidebar-2{
-    display: block !important;
+    display: block;
     margin: 20px;
   }
   .home{
     margin-left: 20px;
   }
+  .suggestion{
+    display: none;
+  }
+}
+@media screen and (max-width: 361px){
+.sidebar-2{
+  width: 90px;
+}
 }

@@ -1,14 +1,14 @@
-import React, { useContext, useState } from 'react';
-import './styles.css';
-import Input from '../../Components/Input';
-import Logo from '../../Components/Logo';
-import { collection, doc, getFirestore, updateDoc } from 'firebase/firestore';
-import app from '../../firebaseConfig';
-import { getStorage, ref, uploadBytes } from 'firebase/storage';
-import { useNavigate } from 'react-router-dom';
-import { AuthContext } from '../../Context/AuthContext';
-import { useSnackbar } from 'notistack';
-import { getAuth } from 'firebase/auth';
+import React, { useContext, useState } from "react";
+import "./styles.css";
+import Input from "../../Components/Input";
+import Logo from "../../Components/Logo";
+import { collection, doc, getFirestore, updateDoc } from "firebase/firestore";
+import app from "../../firebaseConfig";
+import { getStorage, ref, uploadBytes } from "firebase/storage";
+import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../../Context/AuthContext";
+import { useSnackbar } from "notistack";
+import { getAuth } from "firebase/auth";
 
 const EditPage = () => {
   const { currentUser, updateUser } = useContext(AuthContext);
@@ -26,16 +26,16 @@ const EditPage = () => {
 
   const updateUserInfo = async (uid, dataToUpdate) => {
     try {
-      const profilesCollection = collection(db, 'Profiles');
+      const profilesCollection = collection(db, "Profiles");
       const userRef = doc(profilesCollection, uid);
       await updateDoc(userRef, dataToUpdate);
       console.log(uid, dataToUpdate);
-      console.log('Updated');
+      console.log("Updated");
       updateUser(dataToUpdate);
-      enqueueSnackbar('Data updated successfully', { variant: 'success' });
-      navigate('/profile');
+      enqueueSnackbar("Data updated successfully", { variant: "success" });
+      navigate("/profile");
     } catch (error) {
-      enqueueSnackbar(error, { variant: 'error' });
+      enqueueSnackbar(error, { variant: "error" });
     }
   };
 
@@ -45,10 +45,10 @@ const EditPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    let avatarURL = '';
+    let avatarURL = "";
     const avatarRef = ref(
       storage,
-      `avatar/${currentUser?.uid}.${image.name.split('.').pop()}`
+      `avatar/${currentUser?.uid}.${image.name.split(".").pop()}`
     );
     const snapshot = await uploadBytes(avatarRef, image);
     avatarURL = snapshot?.metadata?.fullPath;
@@ -64,8 +64,8 @@ const EditPage = () => {
       gender: gender,
       avatarURL: avatarURL,
     };
-    if (username && email === '') {
-      enqueueSnackbar('Please enter some value', { variant: 'error' });
+    if (username && email === "") {
+      enqueueSnackbar("Please enter some value", { variant: "error" });
     }
     updateUserInfo(userRef, dataToUpdate);
   };
@@ -77,13 +77,14 @@ const EditPage = () => {
           <div>
             <Logo />
           </div>
-          <h2>Edit your profile :</h2>
-          <div>
+          <h2 className="edit-heading">Edit your profile :</h2>
+          <div className="edit-form-parent">
             <Input
               placeholder="New username"
               type="text"
               onChange={(e) => setUsername(e.target.value)}
               value={username}
+              className="edit-form2"
             />
             <br />
             <Input
@@ -91,6 +92,7 @@ const EditPage = () => {
               type="text"
               onChange={(e) => setFullName(e.target.value)}
               value={fullName}
+              className="edit-form2"
             />
             <br />
             <Input
@@ -98,6 +100,7 @@ const EditPage = () => {
               type="text"
               onChange={(e) => setBio(e.target.value)}
               value={bio}
+              className="edit-form2"
             />
             <br />
             <Input
@@ -105,6 +108,7 @@ const EditPage = () => {
               type="text"
               onChange={(e) => setGender(e.target.value)}
               value={gender}
+              className="edit-form2"
             />
             <br />
             <Input
@@ -112,10 +116,11 @@ const EditPage = () => {
               type="text"
               onChange={(e) => setEmail(e.target.value)}
               value={email}
+              className="edit-form2"
             />
             <br />
             <input
-              className="upload-img"
+              className="upload-img edit-form2"
               type="file"
               placeholder="Upload image"
               accept="image/*"

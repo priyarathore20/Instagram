@@ -39,7 +39,7 @@ const ExplorePage = () => {
         <Sidebar />
       </div>
       <div className="explore">
-        <form onSubmit={fetchImages}>
+        <form onSubmit={fetchImages} className="explore-form">
           <input
             className="explore-input"
             type="text"
