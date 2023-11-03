@@ -13,6 +13,8 @@ import {
   query,
 } from "firebase/firestore";
 import { useSnackbar } from "notistack";
+import Sidebar2 from "../../Components/Sidebar-2";
+import { BsThreeDotsVertical } from "react-icons/bs";
 
 const getAvatarUrl = (avatarURL) => {
   if (avatarURL) {
@@ -67,8 +69,11 @@ const ProfilePage = () => {
 
   return (
     <div className="profile-section">
-      <div>
+      <div className="sidebar--1">
         <Sidebar />
+      </div>
+      <div className="sidebar--2">
+        <Sidebar2 />
       </div>
       <div className="profile">
         <div className="profile-edit">
@@ -81,14 +86,22 @@ const ProfilePage = () => {
           </div>
           <div className="profile-details">
             <div className="profile-username">
-              <h4 className="profile-username-name">{currentUser?.username}</h4>
+              <h4 className="profile-username-name">Priya rathore</h4>
               <button className="profile-username-btn" onClick={handleClick}>
                 Edit profile
               </button>
+              <BsThreeDotsVertical
+                onClick={handleClick}
+                className="profile-edit-icon"
+              />
             </div>
             <div className="followers">
-              <p className="follower">500 followers</p>
-              <p className="following">100 following</p>
+              <p className="follower">
+                500 <span>Followers</span>
+              </p>
+              <p className="following">
+                100 <span>Following</span>
+              </p>
             </div>
             <p className="name">{currentUser?.name}</p>
           </div>

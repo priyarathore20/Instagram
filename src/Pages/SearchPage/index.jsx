@@ -76,8 +76,10 @@ const SearchPage = () => {
   return (
     <div className="search-box">
       <div className="search-body">
-        <Logo />
-        <form onSubmit={searchUser}>
+        <div className="logo-img">
+          <Logo />
+        </div>
+        <form onSubmit={searchUser} className="user-search-form">
           <input
             className="user-search-input"
             type="text"
@@ -85,11 +87,7 @@ const SearchPage = () => {
             value={queryText}
             onChange={handleSearchInputChange}
           />
-          <button
-            className="explore-btn"
-            type="submit"
-            disabled={searchLoading}
-          >
+          <button className="search-btn" type="submit" disabled={searchLoading}>
             <FaSearch />
           </button>
         </form>

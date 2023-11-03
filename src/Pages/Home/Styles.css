@@ -1,8 +1,7 @@
 .home {
   display: flex;
   justify-content: center;
-  margin-left: 244px;
-/* align-items: center; */
+  /* margin-left: 44px; */
   height: 100vh;
   overflow-y: auto;
   padding-top: 40px;
@@ -23,8 +22,48 @@
   max-width: 470px;
 }
 
-.sidebar-2{
-display: none;
+
+
+@media screen and (max-width: 731px) {
+  .sidebar-2{
+    display: none;
+  }
+  .sidebar-1{
+    display: block;
+  }
+  .home{
+  margin-left: 80px;
+}
+  .posts{
+width: 350px;
+}
+}
+
+@media screen and (max-width: 681px) {
+  .sidebar-2{
+    display: none;
+  }
+  .sidebar-1{
+    display: block;
+  }
+  .suggestion{
+    display: none;
+  }
+}
+
+@media screen and (max-width: 586px) {
+  .sidebar-2{
+    display: none;
+  }
+  .sidebar-1{
+    display: block;
+  }
+  .suggestion{
+    display: none;
+  }
+  .posts{
+    width: 350px;
+  }
 }
 
 @media screen and (max-width: 450px){
@@ -41,9 +80,19 @@ display: none;
   .suggestion{
     display: none;
   }
+  .posts{
+    width: 280px;
+  }
 }
+
 @media screen and (max-width: 361px){
 .sidebar-2{
   width: 90px;
+}
+.suggestion{
+  display: none;
+}
+.posts{
+  width: 250px;
 }
 }

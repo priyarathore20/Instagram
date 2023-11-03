@@ -74,7 +74,7 @@ const EditPage = () => {
     <div className="edit">
       <div className="app">
         <form className="edit-form" onSubmit={handleSubmit}>
-          <div>
+          <div className="logo-img">
             <Logo />
           </div>
           <h2 className="edit-heading">Edit your profile :</h2>

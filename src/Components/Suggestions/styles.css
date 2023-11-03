@@ -1,5 +1,5 @@
 .suggest {
-  padding-left: 64px;
+  padding-left: 55px;
   min-width: 244px;
 }
 .Suggestions {
@@ -44,9 +44,3 @@
   max-width: 300px;
   margin-bottom: 20px;
 }
-/* @media screen and (max-width: 550px) {
-  .Suggest{
-    display: none !important;
-  }
-  
-} */
