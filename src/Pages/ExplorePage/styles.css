@@ -36,7 +36,7 @@
   border: #ccc 1px solid;
   outline: none;
   border-radius: 8px;
-  margin-bottom: 70px;
+  margin-bottom: 20px;
 }
 .explore-img {
   overflow: hidden;
@@ -53,10 +53,81 @@ flex-wrap: wrap;
   max-height: 300px;
   /* aspect-ratio: 1/1; */
 }
+.sidebar-2{
+  display: none;
+  width: 30px;
+}
+.sidebar-1{
+  display: block;
+  width: 244px;
+}
 
-@media screen and (max-width: 760px) {
+@media screen and (max-width: 761px) {
+.sidebar-1{
+  display: none;
+}
+.sidebar-2{
+  display: block;
+}
+.explore{
+  margin-left: 50px;
+}
+.searched-images{
+  height: 250px;
+  width: 150px;
+}
+}
+
+@media screen and (max-width: 586px) {
+.sidebar-1{
+  display: none;
+}
+.sidebar-2{
+  display: block;
+}
+.searched-images{
+  width:150px;
+  height: 250px;
+}
+.explore{
+  margin-left: 45px;
+}
+}
+
+@media screen and (max-width: 511px) {
+.explore{
+  margin-left: 50px;
+}
+.searched-images{
+  width: 140px;
+  height: 220px;
+}
+}
+
+@media screen and (max-width: 441px) {
+  .sidebar-2{
+    display: block;
+  }
   .searched-images{
-      width: 150px;
-      height: 250px;
+    width: 150px;
+    height: 190px;
+  }
+  .explore{
+    margin-left: 5px;
+  }
+  }
+
+@media screen and (max-width: 361px) {
+  .sidebar-1{
+    display: none;
+  }
+  .sidebar-2{
+  width: 30px;
+  display: block;
+  }
+  .searched-images{
+      width: 130px;
+      height: 190px;
   }
 }
+

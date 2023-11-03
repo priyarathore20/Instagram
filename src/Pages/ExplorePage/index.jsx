@@ -4,6 +4,7 @@ import Sidebar from "../../Components/Sidebar";
 import { FaSearch } from "react-icons/fa";
 import axios from "axios";
 import { useSnackbar } from "notistack";
+import Sidebar2 from "../../Components/Sidebar-2";
 
 const ExplorePage = () => {
   const [images, setImages] = useState([]);
@@ -35,8 +36,11 @@ const ExplorePage = () => {
 
   return (
     <div className="explore-page">
-      <div>
+      <div className="sidebar-1">
         <Sidebar />
+      </div>
+      <div className="sidebar-2">
+        <Sidebar2 />
       </div>
       <div className="explore">
         <form onSubmit={fetchImages} className="explore-form">
